@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import {Menu} from 'antd'
-import { HomeOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
-const { SubMenu, Item } = Menu;
+import { Menu } from 'antd'
+import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+const { Item } = Menu;
+
 const Header = () => {
 
   const [current, setCurrent] = useState('home')
@@ -12,11 +13,11 @@ const Header = () => {
         Home
       </Item>
 
-      <Item key="signin" icon={<UserAddOutlined />} className="float-right">
+      <Item key="signin" icon={<UserOutlined />} className="float-right">
         Sign In
       </Item>
 
-      <Item key="cart" icon={<UserOutlined />} className="float-right">
+      <Item key="cart" icon={<ShoppingCartOutlined />} className="float-right">
         Cart
       </Item>
     </Menu>
