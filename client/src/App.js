@@ -7,7 +7,7 @@ const App = () => {
   return (
     <>
       <Header/>
-      <main>
+      <main className="text-center">
         <h1>Welcome to Covercove</h1>
       </main>
       <Footer/>

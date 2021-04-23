@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer style={{textAlign: "center"}}>
-      Covercove 2021
+      All the rights are reserved by book authors.
     </footer>
   )
 }
