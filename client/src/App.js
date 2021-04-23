@@ -2,13 +2,14 @@ import React from 'react'
 import './App.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import HomeScreen from './screens/HomeScreen'
 
 const App = () => {
   return (
     <>
       <Header/>
       <main className="text-center">
-        <h1>Welcome to Covercove</h1>
+        <HomeScreen/>
       </main>
       <Footer/>
     </>
