@@ -6,7 +6,7 @@ import Product from '../components/Product'
 const HomeScreen = () => {
   return (
     <>
-      <h1>Latest Products</h1>
+      <h1>Latest Books</h1>
       <Row align="middle" justify="center" gutter={[12,12]}>
         {products.map((product) => (
           <Col>
