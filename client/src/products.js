@@ -6,7 +6,7 @@ const products = [
   description: "learn docker",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 5,
   numReviews: 5
 },
 {
@@ -16,7 +16,7 @@ const products = [
   description: "learn java",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 3.4,
   numReviews: 5
 },
 {
@@ -26,7 +26,7 @@ const products = [
   description: "learn python",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 4.6,
   numReviews: 5
 },
 {
@@ -36,7 +36,7 @@ const products = [
   description: "learn DSA",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 2.7,
   numReviews: 5
 },
 {
@@ -46,7 +46,7 @@ const products = [
   description: "crack interview",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 4.7,
   numReviews: 5
 },
 {
@@ -56,7 +56,7 @@ const products = [
   description: "learn kubernetes",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 3.5,
   numReviews: 5
 },
 {
@@ -66,7 +66,7 @@ const products = [
   description: "React fullstack",
   price: 30,
   countInStock: 2,
-  rating: 4,
+  rating: 3.2,
   numReviews: 5
 },
 {

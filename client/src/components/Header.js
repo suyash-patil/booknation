@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Menu } from 'antd'
 import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import {Link} from 'react-router-dom'
 const { Item } = Menu;
 
 const Header = () => {
@@ -10,15 +11,15 @@ const Header = () => {
   return (
     <Menu selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<HomeOutlined />}>
-        Home
+        <Link to="/">Home</Link>
       </Item>
 
       <Item key="signin" icon={<UserOutlined />} className="float-right">
-        Sign In
+        <Link to="/signin">Sign In</Link>
       </Item>
 
       <Item key="cart" icon={<ShoppingCartOutlined />} className="float-right">
-        Cart
+        <Link to="/cart">Cart</Link>
       </Item>
     </Menu>
   )
