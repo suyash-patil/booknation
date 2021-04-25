@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <Header/>
-      <main className="text-center">
+      <main>
         <Switch>
           <Route exact path="/" component={HomeScreen}/>
           <Route path="/product/:id" component={ProductScreen} />

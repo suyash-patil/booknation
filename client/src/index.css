@@ -26,3 +26,10 @@ code {
 .ant-card-body {
   padding: 6px !important;
 }
+.go-back {
+  display: inline-block;
+  margin: 20px;
+}
+.ant-list-item {
+  justify-content: center !important;
+}
