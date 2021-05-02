@@ -1,13 +1,21 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {List, Row, Col, Image, Card, Button} from 'antd'
-import products from '../products'
+import axios from 'axios'
 import Rating from '../components/Rating'
 import {DollarTwoTone} from '@ant-design/icons'
 
 const ProductScreen = ({match}) => {
 
-  const product = products.find(p => p._id === match.params.id)
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const {data} = await axios.get(`/api/products/${match.params.id}`)
+      setProduct(data)
+    }
+    fetchProduct()
+  },[match])
 
   const data = [
     `Price: $${product.price}`,
@@ -22,7 +30,7 @@ const ProductScreen = ({match}) => {
       <span>
         <Row justify="space-around">
           <Col>
-            <Image src={product.image} alt={product.name} />
+            <Image width="250px" height="300px" src={product.image} alt={product.name} />
           </Col>
           <Col>
             <h3>{product.name}</h3>
