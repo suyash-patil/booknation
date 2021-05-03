@@ -16,3 +16,18 @@ export const addItem = (item,count) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 }
+export const removeItem = (item) => {
+  let cart = []
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart'))
+    }
+    cart.map((prod,i) => {
+      if(prod._id === item._id){
+        cart.splice(i,1)
+      }
+    })
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+}
