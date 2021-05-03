@@ -4,8 +4,9 @@ import {List, InputNumber, Form, Row, Col, Image, Card, Button, Select} from 'an
 import axios from 'axios'
 import Rating from '../components/Rating'
 import {DollarTwoTone} from '@ant-design/icons'
+import {addItem} from '../helpers/cartHelper'
 
-const ProductScreen = ({match}) => {
+const ProductScreen = ({history, match,setCartItems,cartItems}) => {
 
   const [product, setProduct] = useState({})
   const [qty,setQty] = useState(1)
@@ -14,6 +15,7 @@ const ProductScreen = ({match}) => {
     const fetchProduct = async () => {
       const {data} = await axios.get(`/api/products/${match.params.id}`)
       setProduct(data)
+      console.log(cartItems)
     }
     fetchProduct()
   },[match])
@@ -22,6 +24,11 @@ const ProductScreen = ({match}) => {
     `Price: $${product.price}`,
     `Status: ${product.countInStock ? 'Out Of Stock' : 'In Stock'}`
   ];
+
+  const addToCartHandler = () => {
+      addItem(product,qty);
+      setCartItems(JSON.parse(localStorage.getItem('cart')))
+  }
 
   return (
     <span>
@@ -55,6 +62,7 @@ const ProductScreen = ({match}) => {
                       </List.Item>
                     )}
                   />
+                {/* We can avoid product.countInStock>0 ? <>something</> : <>nothing</> */}
                 {product.countInStock > 0 && (
                 <Form >
                     <Form.Item label="Qty">
@@ -68,7 +76,7 @@ const ProductScreen = ({match}) => {
                     </Form.Item>
                   </Form>
                 )}
-              <Button danger type="primary" className="btn-block"
+              <Button onClick={addToCartHandler} danger type="primary" className="btn-block"
                 style={{ marginTop: "0.3rem" }} disabled={product.countInStock === 0}>
                 Add to Cart
             </Button>
