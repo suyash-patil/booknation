@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {List, Row, Col, Image, Card, Button} from 'antd'
+import {List, InputNumber, Form, Row, Col, Image, Card, Button, Select} from 'antd'
 import axios from 'axios'
 import Rating from '../components/Rating'
 import {DollarTwoTone} from '@ant-design/icons'
@@ -8,6 +8,7 @@ import {DollarTwoTone} from '@ant-design/icons'
 const ProductScreen = ({match}) => {
 
   const [product, setProduct] = useState({})
+  const [qty,setQty] = useState(1)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,6 +55,19 @@ const ProductScreen = ({match}) => {
                       </List.Item>
                     )}
                   />
+                {product.countInStock > 0 && (
+                <Form >
+                    <Form.Item label="Qty">
+                    <Select value={qty} onChange={(value) => setQty(value)} >
+                      {
+                        [...Array(product.countInStock).keys()].map(x => (
+                          <Select.Option value={x+1}>{x+1}</Select.Option>
+                        ))
+                      }
+                      </Select>
+                    </Form.Item>
+                  </Form>
+                )}
               <Button danger type="primary" className="btn-block"
                 style={{ marginTop: "0.3rem" }} disabled={product.countInStock === 0}>
                 Add to Cart
