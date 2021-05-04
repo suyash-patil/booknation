@@ -52,4 +52,32 @@ router.route('/profile').get(safe, expressAsyncHandler(async (req, res) => {
   }
 }))
 
+router.route('/register').post( expressAsyncHandler(async (req, res) => {
+  const { name, email, password } = req.body
+
+  const userExist = await User.findOne({email})
+
+  if(userExist) {
+    res.status(400).json('User already exist with given email')
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password
+  })
+  if(user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id)
+    })
+  }
+  else {
+    res.status(400).json('Invalid Data')
+  }
+}))
+
 export default router
