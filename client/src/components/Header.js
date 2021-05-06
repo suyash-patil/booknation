@@ -1,16 +1,18 @@
 import React, { useState,useEffect } from 'react'
 import { Menu } from 'antd'
 import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
 const { Item } = Menu;
 
-const Header = ({history,setUser,user}) => {
+const Header = ({setUser,user}) => {
+  const history = useHistory()
 
   const [current, setCurrent] = useState('home')
 
   const logout = () => {
     window.localStorage.removeItem('userInfo');
+    history.push('/')
     setUser(null);
   }
   const giveData = () => {

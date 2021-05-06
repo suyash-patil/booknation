@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React,{useState,useEffect} from 'react'
 
-const ProfileScreen = () => {
+const ProfileScreen = ({history}) => {
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
   const [edit,setEdit] = useState(false)
@@ -9,13 +9,16 @@ const ProfileScreen = () => {
   const [oldpassword,setOldPassword] = useState('')
   const [newpass,setNewPass]= useState('')
 
-  const config = {
-    headers: {
-      'Content-Type':'application/json'
-    }
-  }
+
 
   const updateHandler = async () => {
+    const { token } = JSON.parse(localStorage.getItem('userInfo'))
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
     const {data} = await axios.put(`/api/users/profile/update`,{email,name,oldpassword,newpass},config)
     localStorage.setItem('userInfo',JSON.stringify(data))
   }
@@ -23,14 +26,18 @@ const ProfileScreen = () => {
 
 
   useEffect(() => {
-    const {email,name} = JSON.parse(localStorage.getItem('userInfo'))
-    // setEmail(email)
-    // setName(name)
-    setUser(JSON.parse(localStorage.getItem('userInfo')))
+    if (!localStorage.getItem('userInfo')){
+      history.push('/')
+    }
+    else {
+      const { email,name, token } = JSON.parse(localStorage.getItem('userInfo'))
+      setUser(JSON.parse(localStorage.getItem('userInfo')))
       setName(name)
       setEmail(email)
 
-  },[])
+    }
+
+  },[history])
   return (
 //     <div>
 //       {user && <>
@@ -52,6 +59,9 @@ const ProfileScreen = () => {
         { edit ? (<>
          <input value={name} onChange={(e) => setName(e.target.value)} />
          <h2>{email}</h2>
+         Change Password
+         <input value={oldpassword} onChange={(e) => setOldPassword(e.target.value)}/>
+         <input value={newpass} onChange={(e) => setNewPass(e.target.value)}/>
        </>) : (<>
      <h2>{name}</h2>
      <h2>{email}</h2>

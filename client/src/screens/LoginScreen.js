@@ -20,6 +20,7 @@ const LoginScreen = ({history,setUser,user}) => {
       if (data) {
         localStorage.setItem('userInfo', JSON.stringify(data))
         setUser(JSON.parse(localStorage.getItem('userInfo')))
+        history.push('/')
       }
     }
     catch(error) {

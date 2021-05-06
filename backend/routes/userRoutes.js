@@ -71,7 +71,7 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
   const user = await User.findOne({email:email})
   if (user) {
     user.name = name || user.name
-    if(user.password === oldpassword) {
+    if(newpass) {
       user.password = newpass
     }
     const updatedUser = await user.save()
