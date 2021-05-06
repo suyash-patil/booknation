@@ -41,7 +41,7 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: null
+        token: generateToken(user._id)
       })
   }
   else {
@@ -50,8 +50,9 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
   }
 }))
 
-router.route('/profile').get(safe, expressAsyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+router.route('/profile').get(expressAsyncHandler(async (req, res) => {
+  const {email} = req.body
+  const user = await User.findOne({email:email})
   if(user) {
     res.json({
       _id: user._id,
@@ -61,6 +62,30 @@ router.route('/profile').get(safe, expressAsyncHandler(async (req, res) => {
     })
   }
   else {
+    throw new Error('User not found')
+  }
+}))
+
+router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
+  const {email,name,oldpassword,newpass} = req.body
+  const user = await User.findOne({email:email})
+  if (user) {
+    user.name = name || user.name
+    if(user.password === oldpassword) {
+      user.password = newpass
+    }
+    const updatedUser = await user.save()
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id)
+    })
+
+  }
+  else {
+    res.status(404)
     throw new Error('User not found')
   }
 }))

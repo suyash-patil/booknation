@@ -23,7 +23,7 @@ const LoginScreen = ({history,setUser,user}) => {
       }
     }
     catch(error) {
-      setError('Invalid Email and Password')
+      console.log('Invalid Email and password')
     }
   }
 

@@ -23,7 +23,7 @@ const Header = ({history,setUser,user}) => {
 
     }
     return () => setHeader
-  },[user])
+  },[setUser])
 
   return (
     <Menu selectedKeys={[current]} mode="horizontal">
@@ -33,7 +33,9 @@ const Header = ({history,setUser,user}) => {
 
       {user ? (<SubMenu icon={<UserOutlined />} className="float-right" title={user.name} >
           <Menu.Item onClick={giveData}>
-            Profile
+            <Link to="/profile">
+              Profile
+            </Link>
           </Menu.Item>
           <Menu.Item onClick={logout}>
             Logout
@@ -44,9 +46,13 @@ const Header = ({history,setUser,user}) => {
       </Item>
       )}
 
-      <Item key="cart" icon={<ShoppingCartOutlined />} className="float-right">
+      {user ? <Item key="cart" icon={<ShoppingCartOutlined />} className="float-right">
         <Link to="/cart">Cart</Link>
-      </Item>
+      </Item> : <Item key="register" className="float-right">
+        <Link to="/register">
+          Register
+        </Link>
+      </Item>}
     </Menu>
   )
 }
