@@ -6,9 +6,11 @@ import Header from './components/Header'
 import CartScreen from './screens/CartScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
+import PaymentScreen from './screens/PaymentScreen'
 import ProductScreen from './screens/ProductScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import ShippingScreen from './screens/ShippingScreen'
 
 const App = () => {
   const [cartItems,setCartItems] = useState([]);
@@ -39,6 +41,8 @@ const App = () => {
           <Route exact path="/" render={(props) => (<HomeScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)}/>
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route path="/cart/:id?" render={(props) => (<CartScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route exact path="/shipping" render={(props) => (<ShippingScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route exact path="/payment" render={(props) => (<PaymentScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
         </Switch>
       </main>
       <Footer/>
