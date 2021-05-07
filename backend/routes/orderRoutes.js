@@ -26,4 +26,39 @@ router.post('/',expressAsyncHandler(async (req,res) => {
   }
 }))
 
+router.get('/:id', expressAsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate('user','name email')
+
+  if(order) {
+    res.json(order)
+  }
+  else {
+    res.status(404)
+    throw new Error('Not found')
+  }
+
+}))
+
+router.put('/:id/pay', expressAsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address
+    }
+    const updatedOrder = await order.save()
+    res.json(updatedOrder)
+  }
+  else {
+    res.status(404)
+    throw new Error('Not found')
+  }
+
+}))
+
 export default router

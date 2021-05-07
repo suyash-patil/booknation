@@ -4,6 +4,7 @@ import './App.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CartScreen from './screens/CartScreen'
+import CompleteOrderScreen from './screens/CompleteOrderScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import OrderScreen from './screens/OrderScreen'
@@ -45,6 +46,7 @@ const App = () => {
           <Route exact path="/shipping" render={(props) => (<ShippingScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/payment" render={(props) => (<PaymentScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/placeorder" render={(props) => (<OrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route exact path="/placeorder/:id" render={(props) => (<CompleteOrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
         </Switch>
       </main>
       <Footer/>

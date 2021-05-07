@@ -7,8 +7,8 @@ import axios from 'axios'
 const OrderScreen = ({history}) => {
   const [shippingAddress,setAddress] = useState({})
   const [paymentMethod,setMethod] = useState('')
-  const [cart,setCart] = useState([])
-  const [_id,setId] = useState()
+  const [orderItems,setOrderItems] = useState([])
+  const [_id,setId] = useState('')
   const [itemPrice,setItemPrice] = useState(50)
   const [shippingPrice, setShippingPrice] = useState(10)
   const [taxPrice,setTaxPrice]  = useState(3.4)
@@ -28,15 +28,17 @@ const OrderScreen = ({history}) => {
       setAddress(JSON.parse(localStorage.getItem('shipAddress')))
       const {paymethod} = JSON.parse(localStorage.getItem('paymethod'))
       setMethod(paymethod)
-      setCart(JSON.parse(localStorage.getItem('cart')))
+      setOrderItems(JSON.parse(localStorage.getItem('cart')))
       const {_id} = JSON.parse(localStorage.getItem('userInfo'))
+      console.log(_id)
       setId(_id)
     }
   },[history])
 
   const placeOrder = async () => {
-    const {data} = await axios.post(`/api/order`,{cart,shippingAddress,paymentMethod, itemPrice,shippingPrice,taxPrice,totalPrice,_id})
+    const {data} = await axios.post(`/api/order`,{orderItems,shippingAddress,paymentMethod, itemPrice,shippingPrice,taxPrice,totalPrice,_id})
     console.log('success',data)
+    history.push(`/placeorder/${data._id}`)
   }
 
 
@@ -47,9 +49,9 @@ const OrderScreen = ({history}) => {
       <h2>Payment Method</h2>
       <h5>{paymentMethod}</h5>
       <h2>Cart</h2>
-      {cart && <List>
-        {console.log(cart)}
-        {cart.map((item) => (
+      {orderItems && <List>
+        {console.log(orderItems)}
+        {orderItems.map((item) => (
           <List.Item>
             <Row>
               <Col>
