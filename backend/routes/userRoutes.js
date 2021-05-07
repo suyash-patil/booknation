@@ -1,4 +1,5 @@
 import express from 'express'
+import bcrypt from 'bcryptjs'
 import expressAsyncHandler from 'express-async-handler'
 import safe from '../middleware/authMiddleware.js'
 const router = express.Router()
@@ -71,7 +72,7 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
   const user = await User.findOne({email:email})
   if (user) {
     user.name = name || user.name
-    if(newpass) {
+    if (await user.matchPass(oldpassword)) {
       user.password = newpass
     }
     const updatedUser = await user.save()
