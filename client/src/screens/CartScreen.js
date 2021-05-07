@@ -58,6 +58,14 @@ const CartScreen = ({cartItems,setCartItems}) => {
           </List>
         )}
       </Col>
+      <Col>
+        <List>
+          <List.Item>
+            <h2>Subtotal ({cartItems.reduce((acc,item)=> acc+item.count, 0)})</h2>
+            ${cartItems.reduce((acc,item)=> acc+item.count * item.price, 0)}
+          </List.Item>
+        </List>
+      </Col>
     </Row>
   )
 }

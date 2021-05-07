@@ -9,10 +9,6 @@ const OrderScreen = ({history}) => {
   const [paymentMethod,setMethod] = useState('')
   const [orderItems,setOrderItems] = useState([])
   const [_id,setId] = useState('')
-  const [itemPrice,setItemPrice] = useState(50)
-  const [shippingPrice, setShippingPrice] = useState(10)
-  const [taxPrice,setTaxPrice]  = useState(3.4)
-  const [totalPrice,setTotalPrice] = useState(63.4)
 
   useEffect(() => {
     if(!localStorage.getItem('userInfo')){
@@ -36,7 +32,7 @@ const OrderScreen = ({history}) => {
   },[history])
 
   const placeOrder = async () => {
-    const {data} = await axios.post(`/api/order`,{orderItems,shippingAddress,paymentMethod, itemPrice,shippingPrice,taxPrice,totalPrice,_id})
+    const { data } = await axios.post(`/api/order`, { orderItems, shippingAddress, paymentMethod, itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)), shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)), taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2), totalPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)),_id})
     console.log('success',data)
     history.push(`/placeorder/${data._id}`)
   }
@@ -61,10 +57,9 @@ const OrderScreen = ({history}) => {
                 <Link to={`/product/${item._id}`}>{item.name}</Link>
               </Col>
               <Col>
-                ${item.price}
+                {item.count} x ${item.price} = ${item.count * item.price}
               </Col>
               <Col>
-                <span>{item.count}</span>
                 {/* <Form >
                 <Form.Item label="Qty">
                   <Select value={item.count} onChange={(value) => changeCartItem(item, value)} >
@@ -82,10 +77,23 @@ const OrderScreen = ({history}) => {
                 <DeleteOutlined />
               </Button>
             </Col> */}
+
             </Row>
           </List.Item>
         ))}
       </List>}
+      <Col>
+        <h3>Price: ${orderItems.reduce((acc, item) => acc + item.price * item.count, 0)}</h3>
+      </Col>
+      <Col>
+        <h3>Shipping Charge: ${(orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)}</h3>
+      </Col>
+      <Col>
+        <h3>Tax: ${Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2)}</h3>
+      </Col>
+      <Col>
+        <h3>Total : ${Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))}</h3>
+      </Col>
       <button onClick={placeOrder}>Place Order</button>
     </div>
   )

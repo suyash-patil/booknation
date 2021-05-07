@@ -8,9 +8,6 @@ const CompleteOrderScreen = ({history,match}) => {
   const [sdk,setSdk] = useState(false)
   const abortControl = new AbortController()
   useEffect(() => {
-
-  })
-  useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
       history.push('/')
     }
