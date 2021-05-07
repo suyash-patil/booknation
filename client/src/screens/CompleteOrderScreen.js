@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {PayPalButton} from 'react-paypal-button-v2'
+import {saveAs} from 'file-saver'
 
 const CompleteOrderScreen = ({history,match}) => {
   const orderId = match.params.id
   const [order,setOrder] = useState({})
   const [sdk,setSdk] = useState(false)
+  const [user,setUser] = useState()
   const abortControl = new AbortController()
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
@@ -17,7 +19,8 @@ const CompleteOrderScreen = ({history,match}) => {
     else if (!localStorage.getItem('paymethod')) {
       history.push('/payment')
     }
-      const addPayPalScript = async () => {
+        setUser(JSON.parse(localStorage.getItem('userInfo')))
+        const addPayPalScript = async () => {
         const {data:clientId} = await axios.get('/api/config/paypal')
         const script = document.createElement('script')
         script.type = 'text/javascript'
@@ -46,9 +49,16 @@ const CompleteOrderScreen = ({history,match}) => {
     console.log(paymentResult)
     const { data } = await axios.put(`/api/order/${orderId}/pay`,paymentResult)
     history.push('/')
+    await axios.post('/api/create-pdf',{user,cartItems:JSON.parse(localStorage.getItem('cart')),paymentResult})
+    .then(async() => await axios.get('/api/fetch-pdf',{responseType:'blob'}))
+    .then((res) => {
+      const pdfBlob = new Blob([res.data],{type:'application/pdf'});
+      saveAs(pdfBlob,'newPdf.pdf')
+    })
     localStorage.removeItem('cart')
     localStorage.removeItem('shipAddress')
     localStorage.removeItem('paymethod')
+
   }
   return (
     <div>
