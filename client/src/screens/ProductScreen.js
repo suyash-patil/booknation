@@ -22,7 +22,7 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
 
   const data = [
     `Price: $${product.price}`,
-    `Status: ${product.countInStock ? 'Out Of Stock' : 'In Stock'}`
+    `Status: ${product.countInStock ? 'In Stock' : 'Out of Stock'}`
   ];
 
   const addToCartHandler = () => {
@@ -51,31 +51,29 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
               </div>
 
           </Col>
-          <Col>
+          <Col style={{width:"250px"}}>
             <Card>
-                  <List
-                    bordered
-                    dataSource={data}
-                    renderItem={item => (
-                      <List.Item>
-                        {item}
-                      </List.Item>
-                    )}
-                  />
+                  <List>
+                <List.Item><span style={{ marginLeft: "1em" }}>Price:</span> <span style={{ marginLeft: "7em" }}>${product.price}</span></List.Item>
+                <List.Item><span style={{ marginLeft: "1em" }}>Status:</span> <span style={{textAlign:"center", marginLeft: "5.5em" }}>{product.countInStock ? "In Stock" : "Out of Stock"}</span> </List.Item>
+                    <List.Item>
                 {/* We can avoid product.countInStock>0 ? <>something</> : <>nothing</> */}
                 {product.countInStock > 0 && (
-                <Form >
-                    <Form.Item label="Qty">
-                    <Select value={qty} onChange={(value) => setQty(value)} >
+                <Form style={{marginLeft:"-4em",width:"auto"}}>
+                    <Form.Item label="Quantity">
+                        <Select style={{width:"7em",textAlign:"center"}} value={qty} onChange={(value) => setQty(value)} >
                       {
-                        [...Array(product.countInStock).keys()].map(x => (
-                          <Select.Option value={x+1}>{x+1}</Select.Option>
+                        [...Array(product.countInStock).keys()].map((x,index) => (
+                          <Select.Option style={{textAlign:"center"}} key={index} value={x+1}>{x+1}</Select.Option>
                         ))
                       }
                       </Select>
                     </Form.Item>
                   </Form>
+
                 )}
+                </List.Item>
+              </List>
               <Button onClick={addToCartHandler} danger type="primary" className="btn-block"
                 style={{ marginTop: "0.3rem" }} disabled={product.countInStock === 0}>
                 Add to Cart

@@ -36,7 +36,7 @@ const CartScreen = ({cartItems,setCartItems}) => {
                   </Col>
                   <Col>
                     <Form >
-                      <Form.Item label="Qty">
+                      <Form.Item label="Quantity">
                         <Select value={item.count} onChange={(value) => changeCartItem(item,value)} >
                           {
                             [...Array(item.countInStock).keys()].map(x => (

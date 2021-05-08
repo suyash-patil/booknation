@@ -1,3 +1,14 @@
 main {
   min-height: 70vh;
 }
+.ant-col .ant-form-item-label {
+  margin-left: 3em !important;
+}
+.ant-form-item-control-input {
+  margin-left: 2em !important;
+}
+@media only screen and (max-width:575px) {
+ .ant-form .ant-form-item .ant-form-item-control {
+    margin-left: 1em !important;
+  }
+}
