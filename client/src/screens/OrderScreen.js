@@ -34,6 +34,7 @@ const OrderScreen = ({history}) => {
   const placeOrder = async () => {
     const { data } = await axios.post(`/api/order`, { orderItems, shippingAddress, paymentMethod, itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)), shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)), taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2), totalPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)),_id})
     console.log('success',data)
+    localStorage.setItem('orderData',JSON.stringify(data))
     history.push(`/placeorder/${data._id}`)
   }
 

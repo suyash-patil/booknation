@@ -49,7 +49,7 @@ const CompleteOrderScreen = ({history,match}) => {
     console.log(paymentResult)
     const { data } = await axios.put(`/api/order/${orderId}/pay`,paymentResult)
     history.push('/')
-    await axios.post('/api/create-pdf',{user,cartItems:JSON.parse(localStorage.getItem('cart')),paymentResult})
+    await axios.post('/api/create-pdf',{user,orderData: JSON.parse(localStorage.getItem('orderData')),cartItems:JSON.parse(localStorage.getItem('cart')),paymentResult})
     .then(async() => await axios.get('/api/fetch-pdf',{responseType:'blob'}))
     .then((res) => {
       const pdfBlob = new Blob([res.data],{type:'application/pdf'});

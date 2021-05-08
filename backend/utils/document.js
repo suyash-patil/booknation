@@ -1,131 +1,239 @@
 const template = ({ user, cartItems,paymentResult }) => {
   const today = new Date();
   return `
-    <!doctype html>
-    <html>
-       <head>
-          <meta charset="utf-8">
-          <title>PDF Result Template</title>
-          <style>
-             .invoice-box {
-             max-width: 800px;
-             margin: auto;
-             padding: 30px;
-             border: 1px solid #eee;
-             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-             font-size: 16px;
-             line-height: 24px;
-             font-family: 'Helvetica Neue', 'Helvetica',
-             color: #555;
-             }
-             .margin-top {
-             margin-top: 50px;
-             }
-             .justify-center {
-             text-align: center;
-             }
-             .invoice-box table {
-             width: 100%;
-             line-height: inherit;
-             text-align: left;
-             }
-             .invoice-box table td {
-             padding: 5px;
-             vertical-align: top;
-             }
-             .invoice-box table tr td:nth-child(2) {
-             text-align: right;
-             }
-             .invoice-box table tr.top table td {
-             padding-bottom: 20px;
-             }
-             .invoice-box table tr.top table td.title {
-             font-size: 45px;
-             line-height: 45px;
-             color: #333;
-             }
-             .invoice-box table tr.information table td {
-             padding-bottom: 40px;
-             }
-             .invoice-box table tr.heading td {
-             background: #eee;
-             border-bottom: 1px solid #ddd;
-             font-weight: bold;
-             }
-             .invoice-box table tr.details td {
-             padding-bottom: 20px;
-             }
-             .invoice-box table tr.item td {
-             border-bottom: 1px solid #eee;
-             }
-             .invoice-box table tr.item.last td {
-             border-bottom: none;
-             }
-             .invoice-box table tr.total td:nth-child(2) {
-             border-top: 2px solid #eee;
-             font-weight: bold;
-             }
-             @media only screen and (max-width: 600px) {
-             .invoice-box table tr.top table td {
-             width: 100%;
-             display: block;
-             text-align: center;
-             }
-             .invoice-box table tr.information table td {
-             width: 100%;
-             display: block;
-             text-align: center;
-             }
-             }
-          </style>
-       </head>
-       <body>
-          <div class="invoice-box">
-             <table cellpadding="0" cellspacing="0">
-                <tr class="top">
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td class="title"><img  src="https://i2.wp.com/cleverlogos.co/wp-content/uploads/2018/05/reciepthound_1.jpg?fit=800%2C600&ssl=1"
-                               style="width:100%; max-width:156px;"></td>
-                            <td>
-                               Date: ${`${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.`}
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr class="information">
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td>
-                               Customer name: ${user.name}
-                            </td>
-                            <td>
-                               Receipt number: ${paymentResult.id}
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
-                </tr>
+    <!DOCTYPE html>
+<html lang="en">
 
-                ${cartItems.map((item) => (
-                  `<tr class="item">
-                   <td>${item.name}</td>
-                   <td>${item.price}$</td>
-                </tr>`
-                ))}
-             </table>
-             <br />
-             <h1 class="justify-center">Total price: ${parseInt(paymentResult.purchase_units[0].amount.value)}$</h1>
-          </div>
-       </body>
-    </html>
+<head>
+  <meta charset="utf-8">
+  <title>Example 1</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style.css" media="all" />
+   <style>
+    .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  width: 21cm;
+  height: 29.7cm;
+  margin: 0 auto;
+  color: #001028;
+  background: #FFFFFF;
+  font-family: 'Roboto','Helvetica Neue', 'Helvetica';
+  font-size: 12px;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project {
+  float: left;
+}
+
+#project span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div {
+  white-space: nowrap;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+  </style>
+</head>
+
+<body>
+  <header class="clearfix">
+    <div id="logo">
+      <img src="logo.png">
+    </div>
+    <h1>INVOICE</h1>
+    <div id="company" class="clearfix">
+      <div>Company Name</div>
+      <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+      <div>(602) 519-0450</div>
+      <div><a href="mailto:company@example.com">company@example.com</a></div>
+    </div>
+    <div id="project">
+      <div><span>NAME</span> ${user.name}</div>
+      <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
+      <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+      <div><span>DATE</span> August 17, 2015</div>
+      <div><span>DUE DATE</span> September 17, 2015</div>
+    </div>
+  </header>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th class="service">SERVICE</th>
+          <th class="desc">DESCRIPTION</th>
+          <th>PRICE</th>
+          <th>QTY</th>
+          <th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="service">Design</td>
+          <td class="desc">Creating a recognizable design solution based on the company's existing visual identity</td>
+          <td class="unit">$40.00</td>
+          <td class="qty">26</td>
+          <td class="total">$1,040.00</td>
+        </tr>
+        <tr>
+          <td class="service">Development</td>
+          <td class="desc">Developing a Content Management System-based Website</td>
+          <td class="unit">$40.00</td>
+          <td class="qty">80</td>
+          <td class="total">$3,200.00</td>
+        </tr>
+        <tr>
+          <td class="service">SEO</td>
+          <td class="desc">Optimize the site for search engines (SEO)</td>
+          <td class="unit">$40.00</td>
+          <td class="qty">20</td>
+          <td class="total">$800.00</td>
+        </tr>
+        <tr>
+          <td class="service">Training</td>
+          <td class="desc">Initial training sessions for staff responsible for uploading web content</td>
+          <td class="unit">$40.00</td>
+          <td class="qty">4</td>
+          <td class="total">$160.00</td>
+        </tr>
+        <tr>
+          <td colspan="4">SUBTOTAL</td>
+          <td class="total">$5,200.00</td>
+        </tr>
+        <tr>
+          <td colspan="4">TAX 25%</td>
+          <td class="total">$1,300.00</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="grand total">GRAND TOTAL</td>
+          <td class="grand total">$6,500.00</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="notices">
+      <div>NOTICE:</div>
+      <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+    </div>
+  </main>
+  <footer>
+    Invoice was created on a computer and is valid without the signature and seal.
+  </footer>
+</body>
+
+</html>
     `;
 };
 
