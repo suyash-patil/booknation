@@ -58,6 +58,7 @@ const CompleteOrderScreen = ({history,match}) => {
     localStorage.removeItem('cart')
     localStorage.removeItem('shipAddress')
     localStorage.removeItem('paymethod')
+    localStorage.removeItem('orderData')
 
   }
   return (

@@ -1,4 +1,4 @@
-const template = ({ user, cartItems,paymentResult }) => {
+const template = ({ user,orderData, cartItems,paymentResult }) => {
   const today = new Date();
   return `
     <!DOCTYPE html>
@@ -24,13 +24,15 @@ a {
 
 body {
   position: relative;
-  width: 21cm;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
   height: 29.7cm;
   margin: 0 auto;
   color: #001028;
   background: #FFFFFF;
   font-family: 'Roboto','Helvetica Neue', 'Helvetica';
-  font-size: 12px;
+  font-size: 1.2rem;
 }
 
 header {
@@ -44,7 +46,8 @@ header {
 }
 
 #logo img {
-  width: 90px;
+  width: 200px;
+  height:200px;
 }
 
 h1 {
@@ -56,17 +59,23 @@ h1 {
   font-weight: normal;
   text-align: center;
   margin: 0 0 20px 0;
-  background: url(dimension.png);
+  background: url(https://raw.githubusercontent.com/suyash-patil/covercove/main/backend/utils/dimension.png);
 }
 
 #project {
   float: left;
 }
 
+#company span {
+   color: #5D6975;
+   margin-right: 10px;
+   display: inline-block;
+   font-size: 0.8em;
+}
+
 #project span {
   color: #5D6975;
   text-align: right;
-  width: 52px;
   margin-right: 10px;
   display: inline-block;
   font-size: 0.8em;
@@ -144,6 +153,7 @@ footer {
   bottom: 0;
   border-top: 1px solid #C1CED9;
   padding: 8px 0;
+  margin-top: auto;
   text-align: center;
 }
   </style>
@@ -152,74 +162,60 @@ footer {
 <body>
   <header class="clearfix">
     <div id="logo">
-      <img src="logo.png">
+      <img src="https://raw.githubusercontent.com/suyash-patil/covercove/main/backend/utils/logo.png">
     </div>
     <h1>INVOICE</h1>
     <div id="company" class="clearfix">
-      <div>Company Name</div>
-      <div>455 Foggy Heights,<br /> AZ 85004, US</div>
-      <div>(602) 519-0450</div>
-      <div><a href="mailto:company@example.com">company@example.com</a></div>
+      <div><span>RECEIPT ID</span> ${paymentResult.id}</div>
+      <div><span>TRANSACTION ID</span> ${paymentResult.purchase_units[0].payments.captures[0].id}</div>
+      <div><span>PAYMENT MODE</span> PayPal</div>
     </div>
     <div id="project">
       <div><span>NAME</span> ${user.name}</div>
-      <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
-      <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
-      <div><span>DATE</span> August 17, 2015</div>
-      <div><span>DUE DATE</span> September 17, 2015</div>
+      <div><span>ADDRESS LINE-1</span> ${orderData.shippingAddress.address}</div>
+      <div><span>ADDRESS LINE-2</span> ${ orderData.shippingAddress.city + " " + "(" + orderData.shippingAddress.postalCode + ") " + orderData.shippingAddress.country}</div>
+      <div><span>EMAIL ADDRESS</span> <a href=\`mailto:${user.email}\`>${user.email}</a></div>
+      <div><span>SHOPPING</span> ${orderData.createdAt}</div>
+      <div><span>PAYMENT</span> ${paymentResult.create_time}</div>
+
     </div>
   </header>
   <main>
     <table>
       <thead>
         <tr>
-          <th class="service">SERVICE</th>
+          <th class="service">BOOKS</th>
           <th class="desc">DESCRIPTION</th>
-          <th>PRICE</th>
-          <th>QTY</th>
-          <th>TOTAL</th>
+          <th class="unit">PRICE</th>
+          <th class="qty">QTY</th>
+          <th class="total">TOTAL</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="service">Design</td>
-          <td class="desc">Creating a recognizable design solution based on the company's existing visual identity</td>
-          <td class="unit">$40.00</td>
-          <td class="qty">26</td>
-          <td class="total">$1,040.00</td>
-        </tr>
-        <tr>
-          <td class="service">Development</td>
-          <td class="desc">Developing a Content Management System-based Website</td>
-          <td class="unit">$40.00</td>
-          <td class="qty">80</td>
-          <td class="total">$3,200.00</td>
-        </tr>
-        <tr>
-          <td class="service">SEO</td>
-          <td class="desc">Optimize the site for search engines (SEO)</td>
-          <td class="unit">$40.00</td>
-          <td class="qty">20</td>
-          <td class="total">$800.00</td>
-        </tr>
-        <tr>
-          <td class="service">Training</td>
-          <td class="desc">Initial training sessions for staff responsible for uploading web content</td>
-          <td class="unit">$40.00</td>
-          <td class="qty">4</td>
-          <td class="total">$160.00</td>
-        </tr>
+         ${cartItems.map((item) => (
+            `<tr>
+               <td class="service">${item.name}</td>
+               <td class="desc">${item.description}</td>
+               <td class="unit">$${item.price}</td>
+               <td class="qty">${item.count}</td>
+               <td class="total">$${item.price * item.count}</td>
+            </tr>`
+         ))}
         <tr>
           <td colspan="4">SUBTOTAL</td>
-          <td class="total">$5,200.00</td>
+          <td class="total">$${orderData.itemPrice}</td>
         </tr>
         <tr>
-          <td colspan="4">TAX 25%</td>
-          <td class="total">$1,300.00</td>
+          <td colspan="4">SHIPPING</td>
+          <td class="total">$${orderData.shippingPrice}</td>
+        </tr>
+        <tr>
+          <td colspan="4">TAX 7%</td>
+          <td class="total">$${orderData.taxPrice}</td>
         </tr>
         <tr>
           <td colspan="4" class="grand total">GRAND TOTAL</td>
-          <td class="grand total">$6,500.00</td>
+          <td class="grand total">$${orderData.totalPrice}</td>
         </tr>
       </tbody>
     </table>
@@ -229,7 +225,7 @@ footer {
     </div>
   </main>
   <footer>
-    Invoice was created on a computer and is valid without the signature and seal.
+
   </footer>
 </body>
 
