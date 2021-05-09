@@ -34,3 +34,6 @@ code {
 .ant-list-item {
   justify-content: center !important;
 }
+.ant-message-info svg path {
+  fill: #fcba03 !important;
+}

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { Menu } from 'antd'
+import { Menu,message } from 'antd'
 import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -14,6 +14,7 @@ const Header = ({setUser,user}) => {
     window.localStorage.removeItem('userInfo');
     history.push('/')
     setUser(null);
+    message.success("Logged Out Successfully")
   }
   const giveData = () => {
     console.log('user', user)

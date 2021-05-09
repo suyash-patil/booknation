@@ -21,7 +21,7 @@ const HomeScreen = () => {
   return (
     <span className="text-center">
       <Typography>
-        <Typography.Title>Latest Product</Typography.Title>
+        <Typography.Title>Latest Books</Typography.Title>
       </Typography>
       {loading && <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Spin indicator={antIcon}/>

@@ -1,10 +1,18 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react'
+import {message} from 'antd'
 
 const LoginScreen = ({history,setUser,user}) => {
 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('userInfo')) {
+      history.push("/")
+      message.info("You are already logged in")
+    }
+  })
 
   const config = {
     headers: {
@@ -21,6 +29,7 @@ const LoginScreen = ({history,setUser,user}) => {
         localStorage.setItem('userInfo', JSON.stringify(data))
         setUser(JSON.parse(localStorage.getItem('userInfo')))
         history.push('/')
+        message.success("Logged In Successfully")
       }
     }
     catch(error) {

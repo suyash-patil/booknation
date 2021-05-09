@@ -1,5 +1,5 @@
 main {
-  min-height: 70vh;
+  min-height: 100vh;
 }
 .ant-col .ant-form-item-label {
   margin-left: 3em !important;
@@ -7,11 +7,11 @@ main {
 .ant-form-item-control-input {
   margin-left: 2em !important;
 }
-@media only screen and (max-width:575px) {
+/* @media only screen and (max-width:575px) {
  .ant-form .ant-form-item .ant-form-item-control {
     margin-left: 1em !important;
   }
-}
+} */
 .ant-menu {
   top: 0;
   position: sticky;

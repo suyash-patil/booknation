@@ -1,11 +1,19 @@
 import axios from 'axios'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
+import {message} from 'antd'
 
-const RegisterScreen = ({setUser,user}) => {
+const RegisterScreen = ({history,setUser,user}) => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  useEffect(() => {
+    if(localStorage.getItem('userInfo')){
+      history.push("/")
+      message.info("You have already registered")
+    }
+  })
 
   const config = {
     headers: {
