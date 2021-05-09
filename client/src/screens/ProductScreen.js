@@ -41,7 +41,7 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
         ) : (
           <Row justify = "space-around">
           <Col>
-            <Image width = "250px" height = "300px" src = {product.image} alt={product.name} />
+            <Image width="250px" src = {product.image} alt={product.name} />
           </Col>
       <Col>
         <h3>{product.name}</h3>

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: whitesmoke !important;
 }
 
 code {
@@ -16,13 +17,13 @@ code {
   margin-left: 0 !important;
 }
 
-.ant-col:first-child {
+/* .ant-col:first-child {
     padding-left: 0 !important;
 }
 
 .ant-col:last-child {
   padding-right: 0 !important;
-}
+} */
 .ant-card-body {
   padding: 6px !important;
 }

@@ -12,3 +12,10 @@ main {
     margin-left: 1em !important;
   }
 }
+.ant-menu {
+  top: 0;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 1;
+  box-shadow: 0 3px 2px -2px rgb(0 0 0 / 10%) !important;
+}

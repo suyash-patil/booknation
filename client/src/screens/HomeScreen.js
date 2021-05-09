@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Row,Spin } from 'antd'
+import { Col, Row,Spin,Carousel, Typography } from 'antd'
 import axios from 'axios'
 import Product from '../components/Product'
 import { LoadingOutlined } from '@ant-design/icons';
@@ -20,11 +20,13 @@ const HomeScreen = () => {
 
   return (
     <span className="text-center">
-      <h1>Latest Books</h1>
+      <Typography>
+        <Typography.Title>Latest Product</Typography.Title>
+      </Typography>
       {loading && <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Spin indicator={antIcon}/>
       </div>}
-      <Row align="middle" justify="center" gutter={[12,12]}>
+      <Row align="middle" justify="center" gutter={[32,32]}>
         {products.map((product) => (
           <Col key={product._id}>
             <Product product={product} />

@@ -22,7 +22,6 @@ const Header = ({setUser,user}) => {
   useEffect(() => {
     const setHeader = () => {
       setUser(JSON.parse(window.localStorage.getItem('userInfo')))
-
     }
     return () => setHeader
   },[setUser])
@@ -30,7 +29,7 @@ const Header = ({setUser,user}) => {
   return (
     <Menu selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<HomeOutlined />}>
-        <Link to="/">Home</Link>
+        <Link to="/">Covercove</Link>
       </Item>
 
       {user ? (<SubMenu icon={<UserOutlined />} className="float-right" title={user.name} >
