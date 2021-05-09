@@ -29,7 +29,7 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
+  author: {
     type: String,
     required: true
   },

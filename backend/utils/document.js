@@ -185,7 +185,7 @@ footer {
       <thead>
         <tr>
           <th class="service">BOOKS</th>
-          <th class="desc">DESCRIPTION</th>
+          <th class="desc">AUTHOR</th>
           <th class="unit">PRICE</th>
           <th class="qty">QTY</th>
           <th class="total">TOTAL</th>
@@ -195,7 +195,7 @@ footer {
          ${cartItems.map((item) => (
             `<tr>
                <td class="service">${item.name}</td>
-               <td class="desc">${item.description}</td>
+               <td class="desc">${item.author}</td>
                <td class="unit">$${item.price}</td>
                <td class="qty">${item.count}</td>
                <td class="total">$${item.price * item.count}</td>
