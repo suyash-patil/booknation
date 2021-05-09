@@ -14,7 +14,7 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
   const [product, setProduct] = useState({})
   const [qty,setQty] = useState(1)
   const [loading,setLoading] = useState(true)
-  let btnRef = useRef()
+  // let btnRef = useRef()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -31,14 +31,14 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
         message.info("You must be logged in!")
         return
       }
-      if (btnRef.current) {
-        btnRef.current.setAttribute("disabled", "disabled");
-      }
+      // if (btnRef.current) {
+      //   btnRef.current.setAttribute("disabled", "disabled");
+      // }
       addItem(product,qty);
       setCartItems(JSON.parse(localStorage.getItem('cart')))
       message.success(`Book added to cart`)
       // It prevents users to click Add to cart button multiple times
-      setTimeout(function () { btnRef.current.removeAttribute("disabled") }, 3000);
+      // setTimeout(function () { btnRef.current.removeAttribute("disabled") }, 3000);
   }
 
   return (
@@ -99,7 +99,8 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
               )}
             </List.Item>
           </List>
-          <Button ref={btnRef} onClick={addToCartHandler} danger type="primary" className="btn-block"
+          {/* ref={btnRef} will come in the element */}
+          <Button onClick={addToCartHandler} danger type="primary" className="btn-block"
             style={{ marginTop: "0.3rem" }} disabled={product.countInStock === 0}>
             Add to Cart
             </Button>

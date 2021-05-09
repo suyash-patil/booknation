@@ -19,3 +19,14 @@ main {
   z-index: 1;
   box-shadow: 0 3px 2px -2px rgb(0 0 0 / 10%) !important;
 }
+@media (max-width:575px) {
+  .ant-form .ant-form-item .ant-form-item-label, .ant-form .ant-form-item .ant-form-item-control {
+    flex: 1 !important;
+  }
+}
+.cart-form .ant-form-item .ant-form-item-label {
+  margin-left: 0rem !important;
+}
+.cart-form-select {
+  width: 5rem !important;
+}

@@ -37,3 +37,7 @@ code {
 .ant-message-info svg path {
   fill: #fcba03 !important;
 }
+#cart-list-item {
+  justify-content: left !important;
+  text-align: justify !important;
+}
