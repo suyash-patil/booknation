@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { Menu,message } from 'antd'
+import { Menu,message,Badge } from 'antd'
 import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -9,6 +9,12 @@ const Header = ({setUser,user}) => {
   const history = useHistory()
 
   const [current, setCurrent] = useState('home')
+  const [cartItems,setCartItems] = useState([])
+
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem('cart')))
+
+  },[window.localStorage.getItem('cart')])
 
   const logout = () => {
     window.localStorage.removeItem('userInfo');
@@ -48,7 +54,7 @@ const Header = ({setUser,user}) => {
       </Item>
       )}
 
-      {user ? <Item key="cart" icon={<ShoppingCartOutlined />} className="float-right">
+      {user ? <Item key="cart" icon={<Badge offset={[-8, -2]} size="small" count={cartItems ? cartItems.length : 0}><ShoppingCartOutlined/></Badge>} className="float-right">
         <Link to="/cart">Cart</Link>
       </Item> : <Item key="register" className="float-right">
         <Link to="/register">

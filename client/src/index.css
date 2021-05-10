@@ -41,3 +41,6 @@ code {
   justify-content: left !important;
   text-align: justify !important;
 }
+.ant-badge {
+  margin-right: 0 !important;
+}

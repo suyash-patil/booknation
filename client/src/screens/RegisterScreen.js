@@ -13,7 +13,7 @@ const RegisterScreen = ({history,setUser,user}) => {
       history.push("/")
       message.info("You have already registered")
     }
-  })
+  },[])
 
   const config = {
     headers: {
@@ -28,9 +28,11 @@ const RegisterScreen = ({history,setUser,user}) => {
       if(data) {
         localStorage.setItem('userInfo', JSON.stringify(data))
         setUser(JSON.parse(localStorage.getItem('userInfo')))
+        history.push("/")
+        message.success("Registration Successful")
       }
     } catch(error) {
-      console.log('Invalid Data')
+      message.error("User already exists with given email address")
     }
   }
 

@@ -12,7 +12,7 @@ const LoginScreen = ({history,setUser,user}) => {
       history.push("/")
       message.info("You are already logged in")
     }
-  })
+  },[])
 
   const config = {
     headers: {
@@ -33,7 +33,7 @@ const LoginScreen = ({history,setUser,user}) => {
       }
     }
     catch(error) {
-      console.log('Invalid Email and password')
+      message.error("Wrong email address or password")
     }
   }
 

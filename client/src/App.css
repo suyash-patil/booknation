@@ -30,3 +30,48 @@ main {
 .cart-form-select {
   width: 5rem !important;
 }
+@media screen and (min-width:716px) {
+  #price-card {
+    top:50px !important;
+    position: sticky !important;
+    position: -webkit-sticky !important;
+}
+}
+
+@media screen and (max-width:484px) {
+  #cart-items-row {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  #cart-items-row-book-name {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  #cart-items-row-book-price {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  #cart-items-row-book-edit {
+    justify-content: center !important;
+  }
+}
+#price-list-item {
+  justify-content: space-around !important;
+}
+.ant-popover-buttons .ant-btn:hover {
+  border: 1px solid #ff2925 !important;
+  color: #ff2925 !important;
+}
+.ant-popover-buttons .ant-btn-primary {
+  background: #ff2925 !important;
+  color: #ffffff !important;
+  border: 1px solid #ff2925 !important;
+}
+.ant-popover-buttons .ant-btn-primary:hover {
+  background: #ff2925 !important;
+  color: #ffffff !important;
+  border: 1px solid #ff2925 !important;
+}
+.ant-popover-message svg path {
+  fill: #ff2925 !important;
+}

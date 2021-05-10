@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 const ShippingScreen = ({history}) => {
@@ -9,9 +10,18 @@ const ShippingScreen = ({history}) => {
   useEffect(() => {
     if(!localStorage.getItem('userInfo')){
       history.push('/')
+      message.info("You must be logged in")
     }
-    else {
-
+    if(localStorage.getItem('cart')){
+      if (!(JSON.parse(localStorage.getItem('cart'))).length) {
+        history.push("/")
+        message.info("Cart is empty")
+        return
+      }
+    }
+    if(!localStorage.getItem('Cart')){
+      history.push("/")
+      message.info("Cart is empty")
     }
   },[history])
 
