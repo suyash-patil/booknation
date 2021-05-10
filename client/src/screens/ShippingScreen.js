@@ -12,17 +12,17 @@ const ShippingScreen = ({history}) => {
       history.push('/')
       message.info("You must be logged in")
     }
+    if (!localStorage.getItem('Cart')) {
+      history.push("/")
+      message.info("Cart is empty")
+    }
     if(localStorage.getItem('cart')){
       if (!(JSON.parse(localStorage.getItem('cart'))).length) {
         history.push("/")
         message.info("Cart is empty")
-        return
       }
     }
-    if(!localStorage.getItem('Cart')){
-      history.push("/")
-      message.info("Cart is empty")
-    }
+
   },[history])
 
   const submitHandler = (e) => {

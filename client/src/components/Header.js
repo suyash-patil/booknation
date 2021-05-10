@@ -27,11 +27,8 @@ const Header = ({setUser,user}) => {
   }
 
   useEffect(() => {
-    const setHeader = () => {
       setUser(JSON.parse(window.localStorage.getItem('userInfo')))
-    }
-    return () => setHeader
-  },[setUser])
+  },[window.localStorage.getItem('userInfo')])
 
   return (
     <Menu selectedKeys={[current]} mode="horizontal">

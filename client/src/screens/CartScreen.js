@@ -17,8 +17,15 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
   useEffect(() => {
     if(!localStorage.getItem('cart')){
       history.push("/")
+      message.info("Cart is empty")
     }
-  },[])
+    if(localStorage.getItem('cart')){
+      if(!JSON.parse(localStorage.getItem('cart')).length){
+        history.push("/")
+        message.info("Cart is empty")
+      }
+    }
+  }, [window.localStorage.getItem('cart')])
 
   const changeCartItem = (item,value) => {
     addItem(item,value);
@@ -35,14 +42,14 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
   return (
     <>
       <Row style={{marginTop:"25px"}} gutter={[32,32]}>
-        <Col xs={20} sm={20} md={14}>
+        <Col xs={24} sm={24} md={14}>
       <Card>
           <Typography style={{borderBottom:"1px solid #d1d1d1"}}>
             <Title style={{fontSize:"1.5rem" }}>Shopping Cart</Title>
           </Typography>
-        {cartItems.length === 0 ? <h6>Empty</h6> : (
+        {cartItems && cartItems.length === 0 ? <h6>Empty</h6> : (
           <List >
-            {cartItems.map(item => (
+            {cartItems && cartItems.map(item => (
               <List.Item id="cart-list-item">
                 <Row id="cart-items-row" >
                       <Image style={{ objectFit: "contain", maxWidth: "150px" }} height="150px" src={item.image} />
@@ -87,7 +94,7 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
           </Card>
       </Col>
 
-      <Col xs={20} sm={20}  md={10}>
+      <Col xs={24} sm={24}  md={10}>
         <Card id="price-card">
             <Typography style={{ textAlign:"center" }}>
               <Title style={{ fontSize: "1.5rem" }}>Subtotal</Title>
@@ -97,16 +104,16 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
                     <tbody>
                   <tr>
                     <td>Total Items:</td>
-                    <td>{cartItems.reduce((acc, item) => acc + item.count, 0)}</td>
+                    <td>{cartItems && cartItems.reduce((acc, item) => acc + item.count, 0)}</td>
                   </tr>
                   <tr>
                     <td>Total Price:</td>
-                    <td>${Number(cartItems.reduce((acc, item) => acc + item.count * item.price, 0)).toFixed(2)}</td>
+                    <td>${Number(cartItems && cartItems.reduce((acc, item) => acc + item.count * item.price, 0)).toFixed(2)}</td>
                   </tr>
                     </tbody>
                   </table>
                   <List.Item>
-                <Button danger type="primary">
+                <Button id="checkout-btn">
                   <Link to="/shipping">Proceed to Checkout</Link>
                     </Button>
                   </List.Item>

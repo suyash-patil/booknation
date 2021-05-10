@@ -42,7 +42,9 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: generateToken(user._id)
+        token: generateToken(user._id),
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       })
   }
   else {
@@ -59,7 +61,9 @@ router.route('/profile').get(expressAsyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
     })
   }
   else {
@@ -72,7 +76,13 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
   const user = await User.findOne({email:email})
   if (user) {
     user.name = name || user.name
-    if (await user.matchPass(oldpassword)) {
+    if(oldpassword) {
+      if (!await user.matchPass(oldpassword)){
+        throw new Error('The password you entered doesn\'t match the records')
+        return
+      }
+    }
+    if (oldpassword && await user.matchPass(oldpassword)) {
       user.password = newpass
     }
     const updatedUser = await user.save()
@@ -81,7 +91,9 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id)
+      token: generateToken(updatedUser._id),
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
     })
 
   }
@@ -112,7 +124,9 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: generateToken(user._id)
+        token: generateToken(user._id),
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       })
     }
     else {

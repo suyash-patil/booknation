@@ -75,3 +75,22 @@ main {
 .ant-popover-message svg path {
   fill: #ff2925 !important;
 }
+#checkout-btn {
+  background: #4BB543;
+  color: white;
+  border: 1px solid #4BB543;
+}
+#checkout-btn:hover {
+  border: 1px solid #4BB543;
+}
+.table tbody tr td:first-child{
+  font-weight: bold;
+  color: #120338;
+}
+
+.table tbody tr td:nth-child(2){
+  color: #120338;
+}
+#profile-form .ant-form-item-label {
+  margin-left: 0 !important;
+}
