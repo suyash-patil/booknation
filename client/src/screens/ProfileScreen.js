@@ -120,7 +120,7 @@ const ProfileScreen = ({history}) => {
                   </tbody>
                 </table>
                   <div style={{margin:"20px"}}><span style={{color:"red"}}>*</span> If you don't want to update password, leave it empty</div>
-                  <Button disabled={!isUpdated} onClick={updateHandler}>Update Profile</Button>
+                  <Button style={{ color: "white", backgroundColor: "#096dd9", border: "1px solid #096dd9" }} type="primary" disabled={!isUpdated} onClick={updateHandler}>Update Profile</Button>
                 </form>
               </>
           ) : (
@@ -154,7 +154,7 @@ const ProfileScreen = ({history}) => {
                     </tr>
                   </tbody>
                 </table>
-                <Button onClick={() => setEdit(true)}>Edit Profile</Button>
+                  <Button style={{ color:"white", backgroundColor: "#096dd9", border:"1px solid #096dd9"}} type="primary" onClick={() => setEdit(true)}>Edit Profile</Button>
               </>
            )}
         </Card>

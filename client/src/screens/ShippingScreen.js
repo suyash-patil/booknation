@@ -12,7 +12,7 @@ const ShippingScreen = ({history}) => {
       history.push('/')
       message.info("You must be logged in")
     }
-    if (!localStorage.getItem('Cart')) {
+    if (!localStorage.getItem('cart')) {
       history.push("/")
       message.info("Cart is empty")
     }
