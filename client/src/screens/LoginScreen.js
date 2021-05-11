@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React,{useState,useEffect} from 'react'
-import {message} from 'antd'
+import { Form, Input, Button, Checkbox,message,Row,Col,Card } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import {Link} from 'react-router-dom'
 
 const LoginScreen = ({history,setUser,user}) => {
 
@@ -21,7 +23,6 @@ const LoginScreen = ({history,setUser,user}) => {
   }
 
   const loginHandler = async (e) => {
-    e.preventDefault();
     try {
       const { data } = await axios.post(`/api/users/login`, { email, password }, config);
 
@@ -38,12 +39,61 @@ const LoginScreen = ({history,setUser,user}) => {
   }
 
   return (
-    <div>
-      <form>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={loginHandler} type="submit">Submit</button>
-      </form>
+    <div style={{ marginTop: "0px", backgroundColor: "#002766", maxHeight: "120px" }}>
+      <Row justify="center">
+
+        <Col style={{ marginTop: "60px" }} sm={20} xs={24} md={12} lg={12}>
+          <Card style={{ padding:"20px", textAlign: "center" }}>
+            <Form
+              name="normal_login"
+              className="login-form"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={loginHandler}
+            >
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: 'email',
+                    required: true,
+                    message: '',
+                  },
+                ]}
+              >
+                <Input value={email} onChange={(e) => setEmail(e.target.value)} prefix={<MailOutlined style={{marginRight:"20px"}} className="site-form-item-icon" />} placeholder="Email Address" />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Password!',
+                  },
+                ]}
+              >
+                <Input.Password
+                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  prefix={<LockOutlined style={{ marginRight: "20px" }} className="site-form-item-icon" />}
+                  type="password"
+                  placeholder="Password"
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                  Log in
+                </Button>
+
+              </Form.Item>
+              <Form.Item>
+                Not a member <Link to="/register">Sign Up Now</Link>
+              </Form.Item>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
     </div>
   )
 }

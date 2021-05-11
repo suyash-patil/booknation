@@ -61,6 +61,7 @@ const ProfileScreen = ({history}) => {
   useEffect(() => {
     if (!localStorage.getItem('userInfo')){
       history.push('/')
+      message.info("You must be logged in to view profile")
     }
     else {
       const { email,name, token,createdAt,updatedAt } = JSON.parse(localStorage.getItem('userInfo'))
