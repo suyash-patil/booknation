@@ -65,6 +65,7 @@ const OrderScreen = ({history}) => {
     })
     console.log('success',data)
     localStorage.setItem('orderData',JSON.stringify(data))
+    message.success("Order placed successfully")
     history.push(`/placeorder/${data._id}`)
   }
 

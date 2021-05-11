@@ -7,7 +7,7 @@ import {DollarTwoTone, StarFilled} from '@ant-design/icons'
 import { addItem } from '../helpers/cartHelper'
 import { LoadingOutlined,StarOutlined } from '@ant-design/icons';
 const { Title, Paragraph } = Typography;
-const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 70 }} spin />;
+const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 150 }} spin />;
 
 const ProductScreen = ({history, match,setCartItems,cartItems}) => {
 

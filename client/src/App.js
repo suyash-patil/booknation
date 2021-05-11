@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router'
-import './App.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CartScreen from './screens/CartScreen'

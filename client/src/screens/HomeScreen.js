@@ -3,7 +3,7 @@ import { Col, Row,Spin,Carousel, Typography } from 'antd'
 import axios from 'axios'
 import Product from '../components/Product'
 import { LoadingOutlined } from '@ant-design/icons';
-const antIcon = <LoadingOutlined style={{ fontSize: 80,marginTop:70 }} spin />;
+const antIcon = <LoadingOutlined style={{ fontSize: 80,marginTop:140 }} spin />;
 
 const HomeScreen = () => {
   const [products, setProducts] = useState([])
