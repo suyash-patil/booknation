@@ -102,3 +102,12 @@ main {
 #placeorder-btn:hover {
   border: 1px solid #4BB543;
 }
+#go-to-payment-btn {
+  background: #4BB543;
+  color: white;
+  border: 1px solid #4BB543;
+  width: 40% !important;
+}
+#go-to-payment-btn:hover {
+  border: 1px solid #4BB543;
+}

@@ -1,30 +1,51 @@
 import React, { useEffect,useState } from 'react'
-import {List,Row,Col, Button, Image, Select} from 'antd'
+import {List,Row,Col, Button, Image, Select, message,Card} from 'antd'
 import { Link } from 'react-router-dom'
 import { DeleteOutlined } from '@ant-design/icons'
 import axios from 'axios'
 
 const OrderScreen = ({history}) => {
-  const [shippingAddress,setAddress] = useState({})
+  const [shippingAddress,setShippingAddress] = useState({})
   const [paymentMethod,setMethod] = useState('')
   const [orderItems,setOrderItems] = useState([])
   const [_id,setId] = useState('')
+  const [username,setUsername] = useState('')
+  const [address,setAddress] = useState('')
+  const [city,setCity] = useState('')
+  const [pin,setPin] = useState('')
+  const [country,setCountry] = useState('')
+  const [mobile,setMobile] = useState('')
+
+  useEffect(() => {
+    window.scrollTo(0,150)
+  })
 
   useEffect(() => {
     if(!localStorage.getItem('userInfo')){
       history.push('/')
+      message.info("You must be logged in")
     }
     else if(!localStorage.getItem('shipAddress')){
       history.push('/shipping')
+      message.info("Address information needs to be filled")
     }
     else if(!localStorage.getItem('paymethod')){
       history.push('/shipping')
+      message.info("Payment information needs to be filled")
     }
     else {
-      setAddress(JSON.parse(localStorage.getItem('shipAddress')))
+      const { address, mobile, city, country, postalCode } = JSON.parse(localStorage.getItem('shipAddress'))
+      setAddress(address)
+      setMobile(mobile)
+      setCity(city)
+      setCountry(country)
+      setPin(postalCode)
+      setShippingAddress(JSON.parse(localStorage.getItem('shipAddress')))
       const {paymethod} = JSON.parse(localStorage.getItem('paymethod'))
       setMethod(paymethod)
       setOrderItems(JSON.parse(localStorage.getItem('cart')))
+      const {name} = JSON.parse(localStorage.getItem('userInfo'))
+      setUsername(name)
       const {_id} = JSON.parse(localStorage.getItem('userInfo'))
       console.log(_id)
       setId(_id)
@@ -32,7 +53,16 @@ const OrderScreen = ({history}) => {
   },[history])
 
   const placeOrder = async () => {
-    const { data } = await axios.post(`/api/order`, { orderItems, shippingAddress, paymentMethod, itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)), shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)), taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2), totalPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)),_id})
+    const { data } = await axios.post(`/api/order`, {
+      orderItems,
+      shippingAddress,
+      paymentMethod,
+      itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2),
+      shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 15)),
+      taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2),
+      totalPrice: Number(Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))).toFixed(2),
+      _id
+    })
     console.log('success',data)
     localStorage.setItem('orderData',JSON.stringify(data))
     history.push(`/placeorder/${data._id}`)
@@ -40,62 +70,95 @@ const OrderScreen = ({history}) => {
 
 
   return (
-    <div>
-      <h2>Shipping Address</h2>
-      <h5>{shippingAddress.address}</h5>
-      <h2>Payment Method</h2>
-      <h5>{paymentMethod}</h5>
-      <h2>Cart</h2>
-      {orderItems && <List>
-        {console.log(orderItems)}
-        {orderItems.map((item) => (
-          <List.Item>
-            <Row>
-              <Col>
-                <Image width="40px" height="64px" src={item.image} />
-              </Col>
-              <Col>
-                <Link to={`/product/${item._id}`}>{item.name}</Link>
-              </Col>
-              <Col>
-                {item.count} x ${item.price} = ${item.count * item.price}
-              </Col>
-              <Col>
-                {/* <Form >
-                <Form.Item label="Qty">
-                  <Select value={item.count} onChange={(value) => changeCartItem(item, value)} >
-                    {
-                      [...Array(item.countInStock).keys()].map(x => (
-                        <Select.Option value={x + 1}>{x + 1}</Select.Option>
-                      ))
-                    }
-                  </Select>
-                </Form.Item>
-              </Form> */}
-              </Col>
-              {/* <Col>
-              <Button onClick={() => removeItemFromCart(item)}>
-                <DeleteOutlined />
-              </Button>
-            </Col> */}
+    <div style={{ marginTop: "0px", backgroundColor: "#002766", maxHeight: "120px" }}>
+      <Row justify="center">
 
-            </Row>
-          </List.Item>
-        ))}
-      </List>}
-      <Col>
-        <h3>Price: ${Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2)}</h3>
-      </Col>
-      <Col>
-        <h3>Shipping Charge: ${(orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)}</h3>
-      </Col>
-      <Col>
-        <h3>Tax: ${Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2)}</h3>
-      </Col>
-      <Col>
-        <h3>Total : ${Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))}</h3>
-      </Col>
-      <button onClick={placeOrder}>Place Order</button>
+        <Col style={{ marginTop: "60px", minHeight:"130vh" }} sm={20} xs={24} md={12} lg={12}>
+          <Card style={{ paddingBottom:"30px", textAlign: "center" }}>
+
+                <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Order</h3>
+                <table className="table">
+                  <tbody>
+                <tr>
+                  <td>
+                    Customer
+                      </td>
+                  <td>
+                    {username}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Mobile Number
+                      </td>
+                  <td>
+                    {mobile}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Item Price
+                      </td>
+                  <td>
+                    ${Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2)}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Shipping Charges
+                      </td>
+                  <td>
+                    ${(orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Tax
+                      </td>
+                  <td>
+                    ${Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2)}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Total Price
+                      </td>
+                  <td>
+                    ${Number(Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))).toFixed(2)}
+                  </td>
+                </tr>
+                    <tr>
+                      <td>
+                        Address
+                      </td>
+                      <td>
+                        {address}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        City
+                      </td>
+                      <td>
+                        {city + " (" + pin + ")"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Country
+                          </td>
+                      <td>
+                        {country}
+                      </td>
+                    </tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+                <Button id="go-to-payment-btn" autoFocus onClick={placeOrder} >Proceed to Checkout</Button>
+
+          </Card>
+        </Col>
+      </Row>
     </div>
   )
 }

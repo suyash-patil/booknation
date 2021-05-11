@@ -28,8 +28,10 @@ const ShippingScreen = ({history}) => {
       }
     }
     if(localStorage.getItem('shipAddress')){
-      history.push("/placeorder")
-      message.info("You have already filled the address information")
+      if(localStorage.getItem('paymethod')){
+        history.push("/placeorder")
+        message.info("You have already filled the address information")
+      }
     }
 
   },[history])
@@ -142,7 +144,7 @@ const ShippingScreen = ({history}) => {
               </Form.Item>
               <Form.Item>
                 <Button id="placeorder-btn" type="primary" htmlType="submit" className="login-form-button">
-                  Proceed to Checkout
+                  Proceed to Order Confirmation
                 </Button>
               </Form.Item>
             </Form>
