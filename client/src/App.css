@@ -94,3 +94,11 @@ main {
 #profile-form .ant-form-item-label {
   margin-left: 0 !important;
 }
+#placeorder-btn {
+  background: #4BB543;
+  color: white;
+  border: 1px solid #4BB543;
+}
+#placeorder-btn:hover {
+  border: 1px solid #4BB543;
+}

@@ -18,7 +18,7 @@ const OrderScreen = ({history}) => {
       history.push('/shipping')
     }
     else if(!localStorage.getItem('paymethod')){
-      history.push('/payment')
+      history.push('/shipping')
     }
     else {
       setAddress(JSON.parse(localStorage.getItem('shipAddress')))
@@ -84,7 +84,7 @@ const OrderScreen = ({history}) => {
         ))}
       </List>}
       <Col>
-        <h3>Price: ${orderItems.reduce((acc, item) => acc + item.price * item.count, 0)}</h3>
+        <h3>Price: ${Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2)}</h3>
       </Col>
       <Col>
         <h3>Shipping Charge: ${(orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20)}</h3>

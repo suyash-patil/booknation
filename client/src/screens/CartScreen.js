@@ -114,7 +114,7 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
                   </table>
                   <List.Item>
                 <Button id="checkout-btn">
-                  <Link to="/shipping">Proceed to Checkout</Link>
+                  <Link to="/shipping">Place Order</Link>
                     </Button>
                   </List.Item>
               </List>
