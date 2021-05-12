@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React,{useState,useEffect} from 'react'
-import {Card,Row,Col,Form,Typography,Descriptions,Input, Button, message} from 'antd'
+import {Card,Row,Col,Form,Typography,Descriptions,Input, Button, message,Alert,TypographyProps} from 'antd'
 import { MailOutlined} from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+const {Paragraph} = Typography
 
 const ProfileScreen = ({history}) => {
   const [name,setName] = useState('')
@@ -14,6 +16,7 @@ const ProfileScreen = ({history}) => {
   const [newpass,setNewPass]= useState('')
   const [isUpdated,setIsUpdated] = useState(false)
   const [passUpdated,setPassUpdated] = useState(false)
+  const [orders,setOrders] = useState([])
   const passw = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,25}$/;
 
   useEffect(() => {
@@ -59,6 +62,20 @@ const ProfileScreen = ({history}) => {
   }
 
   useEffect(() => {
+    const fetchOrders = async () => {
+      const {_id} = JSON.parse(localStorage.getItem('userInfo'))
+      const {data} = await axios.get(`/api/order/getorders/${_id}`)
+      console.log(data)
+      setOrders(data)
+    }
+    fetchOrders()
+  },[])
+
+  const copyhandler = () => {
+    message.success("Copied to Clipboard")
+  }
+
+  useEffect(() => {
     if (!localStorage.getItem('userInfo')){
       history.push('/')
       message.info("You must be logged in to view profile")
@@ -75,9 +92,9 @@ const ProfileScreen = ({history}) => {
   },[history])
   return (
       <div style={{ marginTop:"0px", backgroundColor: "#002766", maxHeight:"120px" }}>
-      <Row justify="center">
+      <Row gutter={[12,12]} justify="space-around" >
 
-        <Col style={{marginTop:"60px"}} sm={20} xs={24} md={12} lg={12}>
+        <Col style={{marginTop:"60px"}} sm={24} xs={24} md={24} lg={8}>
          <Card style={{textAlign:"center"}}>
               {edit ? (
                 <>
@@ -160,6 +177,64 @@ const ProfileScreen = ({history}) => {
            )}
         </Card>
       </Col>
+        <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={20} lg={16}>
+          <Card style={{ textAlign: "center" }}>
+            <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Orders</h3>
+            {orders.length === 0 && <p>You have no orders to display</p> }
+            {orders.length && <div style={{overflowX:"auto"}}>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      DATE
+                    </th>
+                    <th>
+                      TOTAL
+                    </th>
+                    <th>
+                      PAYMENT
+                    </th>
+                    <th>
+                      DELIVERY
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr style={{alignItems:"center"}} key={order._id}>
+                      <td>
+                        <Paragraph copyable={{onCopy:function(){message.success("Copied to Clipboard")}}}>{order._id}</Paragraph>
+                      </td>
+                      <td style={{whiteSpace:"nowrap"}}>
+                        {order.createdAt.split("T")[0]}
+                      </td>
+                      <td>
+                        {order.totalPrice}
+                      </td>
+                      <td style={{ whiteSpace: "nowrap" }}>
+                        {order.isPaid ? <Alert style={{padding:"4px"}} message={order.paidAt.split("T")[0]} type="success" showIcon />  : <Alert style={{padding:"4px"}} message="Pending" type="warning" showIcon />}
+                      </td>
+                      <td style={{ whiteSpace: "nowrap" }}>
+                        {order.isDelivered ? <Alert style={{ padding: "4px" }} message={order.deliveredAt.split("T")[0]} type="success" showIcon /> : <Alert style={{padding:"4px"}} message="Pending" type="warning" showIcon />}
+                      </td>
+                      <td>
+                        <Link to={`placeorder/${order._id}`}>
+                          <Button>
+                            Details
+                          </Button>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>}
+          </Card>
+        </Col>
     </Row>
       </div>
   )

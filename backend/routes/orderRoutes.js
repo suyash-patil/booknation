@@ -1,6 +1,7 @@
 import express from 'express'
 import expressAsyncHandler from "express-async-handler";
 const router = express.Router()
+import mongoose from 'mongoose'
 import Order from '../models/orderModel.js'
 
 router.post('/',expressAsyncHandler(async (req,res) => {
@@ -57,6 +58,14 @@ router.put('/:id/pay', expressAsyncHandler(async (req, res) => {
   else {
     res.status(404)
     throw new Error('Not found')
+  }
+
+}))
+
+router.get('/getorders/:id',expressAsyncHandler(async(req,res) =>{
+  const orders = await Order.find({user:req.params.id})
+  if(orders) {
+    res.json(orders)
   }
 
 }))

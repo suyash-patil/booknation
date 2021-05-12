@@ -9,15 +9,13 @@ const CompleteOrderScreen = ({history,match}) => {
   const [sdk,setSdk] = useState(false)
   const [user,setUser] = useState()
   const abortControl = new AbortController()
+
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
       history.push('/')
     }
     else if (!localStorage.getItem('shipAddress')) {
       history.push('/shipping')
-    }
-    else if (!localStorage.getItem('paymethod')) {
-      history.push('/payment')
     }
         setUser(JSON.parse(localStorage.getItem('userInfo')))
         const addPayPalScript = async () => {
@@ -56,8 +54,6 @@ const CompleteOrderScreen = ({history,match}) => {
       saveAs(pdfBlob,'newPdf.pdf')
     })
     localStorage.removeItem('cart')
-    localStorage.removeItem('shipAddress')
-    localStorage.removeItem('paymethod')
     localStorage.removeItem('orderData')
 
   }

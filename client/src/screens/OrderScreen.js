@@ -15,6 +15,7 @@ const OrderScreen = ({history}) => {
   const [pin,setPin] = useState('')
   const [country,setCountry] = useState('')
   const [mobile,setMobile] = useState('')
+  const [email,setEmail] = useState('')
 
   useEffect(() => {
     window.scrollTo(0,150)
@@ -44,8 +45,9 @@ const OrderScreen = ({history}) => {
       const {paymethod} = JSON.parse(localStorage.getItem('paymethod'))
       setMethod(paymethod)
       setOrderItems(JSON.parse(localStorage.getItem('cart')))
-      const {name} = JSON.parse(localStorage.getItem('userInfo'))
+      const {name,email} = JSON.parse(localStorage.getItem('userInfo'))
       setUsername(name)
+      setEmail(email)
       const {_id} = JSON.parse(localStorage.getItem('userInfo'))
       console.log(_id)
       setId(_id)

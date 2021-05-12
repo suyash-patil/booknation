@@ -17,16 +17,16 @@ const ShippingScreen = ({history}) => {
       history.push('/')
       message.info("You must be logged in")
     }
-    if (!localStorage.getItem('cart')) {
-      history.push("/")
-      message.info("Cart is empty")
-    }
-    if(localStorage.getItem('cart')){
-      if (!(JSON.parse(localStorage.getItem('cart'))).length) {
-        history.push("/")
-        message.info("Cart is empty")
-      }
-    }
+    // if (!localStorage.getItem('cart')) {
+    //   history.push("/")
+    //   message.info("Cart is empty")
+    // }
+    // if(localStorage.getItem('cart')){
+    //   if (!(JSON.parse(localStorage.getItem('cart'))).length) {
+    //     history.push("/")
+    //     message.info("Cart is empty")
+    //   }
+    // }
     if(localStorage.getItem('shipAddress')){
       if(localStorage.getItem('paymethod')){
         history.push("/placeorder")
