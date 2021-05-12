@@ -61,7 +61,7 @@ const CompleteOrderScreen = ({history,match}) => {
   return (
     <div style={{ marginTop: "0px", backgroundColor: "#002766", maxHeight: "120px" }}>
       <Row justify="center">
-        <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={16} lg={16}>
+        <Col style={{ marginTop: "60px",marginBottom:"60px" }} sm={24} xs={24} md={16} lg={16}>
           <Card style={{ textAlign: "center" }}>
             <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Orders</h3>
            <div style={{ overflowX: "auto" }}>
