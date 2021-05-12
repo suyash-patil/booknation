@@ -1,7 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import {Row,Col,Card,Alert,Button, Typography,message} from 'antd'
 import {PayPalButton} from 'react-paypal-button-v2'
 import {saveAs} from 'file-saver'
+import {Link} from 'react-router-dom'
+const {Paragraph} = Typography
 
 const CompleteOrderScreen = ({history,match}) => {
   const orderId = match.params.id
@@ -14,9 +17,6 @@ const CompleteOrderScreen = ({history,match}) => {
     if (!localStorage.getItem('userInfo')) {
       history.push('/')
     }
-    else if (!localStorage.getItem('shipAddress')) {
-      history.push('/shipping')
-    }
         setUser(JSON.parse(localStorage.getItem('userInfo')))
         const addPayPalScript = async () => {
         const {data:clientId} = await axios.get('/api/config/paypal')
@@ -28,7 +28,6 @@ const CompleteOrderScreen = ({history,match}) => {
           setSdk(true)
         }
         document.body.appendChild(script)
-        console.log(clientId)
       }
       const getOrder = async () => {
         const {data} = await axios.get(`/api/order/${orderId}`)
@@ -44,7 +43,6 @@ const CompleteOrderScreen = ({history,match}) => {
     }
   },[orderId])
   const payHandler = async (paymentResult) => {
-    console.log(paymentResult)
     const { data } = await axios.put(`/api/order/${orderId}/pay`,paymentResult)
     history.push('/')
     await axios.post('/api/create-pdf',{user,orderData: JSON.parse(localStorage.getItem('orderData')),cartItems:JSON.parse(localStorage.getItem('cart')),paymentResult})
@@ -55,20 +53,137 @@ const CompleteOrderScreen = ({history,match}) => {
     })
     localStorage.removeItem('cart')
     localStorage.removeItem('orderData')
+    localStorage.removeItem('shipAddress')
+    localStorage.removeItem('paymethod')
+    message.success("Payment done successfully")
 
   }
   return (
-    <div>
-      {order && (
-        <>
-          <h2>Order {orderId}</h2>
-          <h3>{console.log(order)}</h3>
-          {order.shippingAddress && <h4>{order.shippingAddress.city}</h4>}
-          <h6>Payment Method</h6>
-          {order && <h6>{order.isPaid ? <span>Paid at {order.paidAt}</span> : <span>Not Paid</span>}</h6>}
-          {!order.isPaid && <PayPalButton amount={order.totalPrice} onSuccess={payHandler}/>}
-        </>
-      )}
+    <div style={{ marginTop: "0px", backgroundColor: "#002766", maxHeight: "120px" }}>
+      <Row justify="center">
+        <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={16} lg={16}>
+          <Card style={{ textAlign: "center" }}>
+            <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Orders</h3>
+           <div style={{ overflowX: "auto" }}>
+              {order && (
+                <>
+                  <table style={{ textAlign: "center", justifyContent: "center" }} className="table">
+                    <tbody>
+                      <tr>
+                        <td>ORDER ID</td>
+                        <td>{order._id}</td>
+                      </tr>
+                      <tr>
+                        <td>Shipping Address</td>
+                        <td>{order.shippingAddress && order.shippingAddress.address}</td>
+                      </tr>
+                      <tr>
+                        <td>City</td>
+                        <td>{order.shippingAddress && order.shippingAddress.city + " (" + order.shippingAddress.postalCode + ")"}</td>
+                      </tr>
+                      <tr>
+                        <td>Country</td>
+                        <td>{order.shippingAddress && order.shippingAddress.country}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <h5 style={{ margin: "20px auto", color: "#096dd9" }}>Item Details</h5>
+                  <table className="table">
+                    <thead>
+                      <th>
+                        BOOK
+                      </th>
+                      <th>
+                        QUANTITY
+                      </th>
+                      <th>
+                        TOTAL PRICE
+                      </th>
+                    </thead>
+                    <tbody>
+                      {order.orderItems && order.orderItems.map((item) => (
+                        <tr key={item._id}>
+                          <td>
+                            {item.name}
+                          </td>
+                          <td>
+                            {item.count}
+                          </td>
+                          <td>
+                            ${Number(item.price * item.count).toFixed(2)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <h5 style={{ margin: "20px auto", color: "#096dd9" }}>Payment Details</h5>
+                  <table style={{ textAlign: "center", justifyContent: "center" }} className="table">
+                    <tbody>
+                      <tr>
+                        <td width="50%">
+                          TOTAL PRICE
+                        </td>
+                        <td>
+                         ${order.itemPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          SHIPPING CHARGES
+                        </td>
+                        <td>
+                          ${order.shippingPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          TAX
+                        </td>
+                        <td>
+                          ${order.taxPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          GRAND TOTAL
+                        </td>
+                        <td>
+                          ${order.totalPrice}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          PAYMENT METHOD
+                        </td>
+                        <td>
+                          {order.paymentMethod}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          PAYMENT STATUS
+                        </td>
+                        <td style={{ padding: "5px" }}>
+                          {order.isPaid ? <Alert type="success" message={`${order.paidAt.split("T")[0]}`} showIcon /> : <Alert type="warning" message="NOT PAID" showIcon />}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          DELIVERY STATUS
+                        </td>
+                        <td style={{ padding: "5px" }}>
+                          {order.isDelivered ? <Alert type="success" message={`${order.deliveredAt.split("T")[0]}`} showIcon /> : <Alert type="warning" message="NOT DELIVERED" showIcon />}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    {!order.isPaid && <PayPalButton amount={order.totalPrice} onError={() => message.error("Payment Unsuccessful")} onSuccess={payHandler} />}
+                </>
+              )}
+            </div>
+          </Card>
+        </Col>
+      </Row>
     </div>
   )
 }
