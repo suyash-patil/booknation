@@ -137,7 +137,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
   }
 }))
 
-router.route('/').get(admin, expressAsyncHandler(async (req, res) => {
+router.route('/').post(admin, expressAsyncHandler(async (req, res) => {
   const users = await User.find({})
   res.json(users)
 }))

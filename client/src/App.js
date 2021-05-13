@@ -11,6 +11,7 @@ import ProductScreen from './screens/ProductScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ShippingScreen from './screens/ShippingScreen'
+import UserlistScreen from './screens/UserlistScreen'
 
 const App = () => {
   const [cartItems,setCartItems] = useState([]);
@@ -38,6 +39,7 @@ const App = () => {
         <Switch>
           <Route exact path="/register" render={(props) => (<RegisterScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/profile" render={(props) => (<ProfileScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
+          <Route exact path="/userlist" render={(props) => (<UserlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
           <Route exact path="/login" render={(props) => (<LoginScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user}  />)}/>
           <Route exact path="/" render={(props) => (<HomeScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)}/>
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />

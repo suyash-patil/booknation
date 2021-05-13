@@ -19,6 +19,7 @@ const CompleteOrderScreen = ({history,match}) => {
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
       history.push('/')
+      message.info("You must be logged in")
     }
         setUser(JSON.parse(localStorage.getItem('userInfo')))
         const addPayPalScript = async () => {

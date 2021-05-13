@@ -65,24 +65,13 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
   }
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const {_id} = JSON.parse(localStorage.getItem('userInfo'))
-      const {data} = await axios.get(`/api/order/getorders/${_id}`)
-      console.log(data)
-      setLoading(false)
-      setOrders(data)
-    }
-    fetchOrders()
-  },[])
-
-
-  useEffect(() => {
-    if (!localStorage.getItem('userInfo')){
+    if (!localStorage.getItem('userInfo')) {
       history.push('/')
       message.info("You must be logged in to view profile")
+      return
     }
     else {
-      const { email,name, token,createdAt,updatedAt } = JSON.parse(localStorage.getItem('userInfo'))
+      const { email, name, token, createdAt, updatedAt } = JSON.parse(localStorage.getItem('userInfo'))
       setUser(JSON.parse(localStorage.getItem('userInfo')))
       setName(name)
       setEmail(email)
@@ -90,7 +79,25 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
       setUpdate(updatedAt)
     }
 
-  },[history])
+  }, [history])
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const { _id } = JSON.parse(localStorage.getItem('userInfo'))
+        const { data } = await axios.get(`/api/order/getorders/${_id}`)
+        console.log(data)
+        setLoading(false)
+        setOrders(data)
+      } catch (error) {
+
+      }
+    }
+    fetchOrders()
+  },[])
+
+
+
   return (
       <div style={{ marginTop:"0px", backgroundColor: "#002766", maxHeight:"120px" }}>
       <Row gutter={[12,12]} justify="space-around" >

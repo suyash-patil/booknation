@@ -39,10 +39,8 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
         const {email} = JSON.parse(localStorage.getItem('userInfo'))
         const { data } = await axios.post('/api/users/profile', { email },config)
         setUser(data)
-        console.log(data)
         setProfileUpdated(false)
       } catch (error) {
-        console.log("Error" + error.message)
       }
     }
     fetchProfile()
@@ -74,6 +72,11 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
       </Item> : <Item key="register" className="float-right">
         <Link to="/register">
           Register
+        </Link>
+      </Item>}
+      {user && user.isAdmin && <Item key="userlist" className="float-right">
+        <Link to="/userlist">
+          Users
         </Link>
       </Item>}
     </Menu>
