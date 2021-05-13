@@ -15,6 +15,7 @@ import ShippingScreen from './screens/ShippingScreen'
 const App = () => {
   const [cartItems,setCartItems] = useState([]);
   const [user,setUser] = useState(null);
+  const [profileUpdated,setProfileUpdated] = useState(false)
 
   useEffect(() => {
     if(typeof window!== 'undefined'){
@@ -32,11 +33,11 @@ const App = () => {
 
   return (
     <>
-      <Header setUser={setUser} user={user}/>
+      <Header setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated}/>
       <main>
         <Switch>
           <Route exact path="/register" render={(props) => (<RegisterScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
-          <Route exact path="/profile" render={(props) => (<ProfileScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route exact path="/profile" render={(props) => (<ProfileScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
           <Route exact path="/login" render={(props) => (<LoginScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user}  />)}/>
           <Route exact path="/" render={(props) => (<HomeScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)}/>
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />

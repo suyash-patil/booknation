@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const {Paragraph} = Typography
 const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 50, marginBottom: 20 }} spin />;
 
-const ProfileScreen = ({history}) => {
+const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
   const [edit,setEdit] = useState(false)
@@ -52,10 +52,11 @@ const ProfileScreen = ({history}) => {
       try{
         const { data } = await axios.put(`/api/users/profile/update`, { email, name, oldpassword, newpass }, config)
         localStorage.setItem('userInfo', JSON.stringify(data))
-        message.success("Profile Updated! Please refresh the page")
+        message.success("Profile Updated!")
         setNewPass("")
         setOldPassword("")
         setPassUpdated(true)
+        setProfileUpdated(true)
         history.push("/profile")
       } catch(error){
         message.error('The password you entered doesn\'t match the records')

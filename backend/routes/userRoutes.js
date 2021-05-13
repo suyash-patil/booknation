@@ -53,7 +53,7 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
   }
 }))
 
-router.route('/profile').get(expressAsyncHandler(async (req, res) => {
+router.route('/profile').post(expressAsyncHandler(async (req, res) => {
   const {email} = req.body
   const user = await User.findOne({email:email})
   if(user) {
@@ -137,7 +137,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
   }
 }))
 
-router.route('/').get(admin,  expressAsyncHandler(async (req, res) => {
+router.route('/').get(admin, expressAsyncHandler(async (req, res) => {
   const users = await User.find({})
   res.json(users)
 }))

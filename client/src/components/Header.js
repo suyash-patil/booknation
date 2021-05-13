@@ -3,13 +3,20 @@ import { Menu,message,Badge } from 'antd'
 import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
+import axios from 'axios';
 const { Item } = Menu;
 
-const Header = ({setUser,user}) => {
+const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
   const history = useHistory()
 
   const [current, setCurrent] = useState('home')
   const [cartItems,setCartItems] = useState([])
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
 
   useEffect(() => {
     setCartItems(JSON.parse(localStorage.getItem('cart')))
@@ -27,8 +34,19 @@ const Header = ({setUser,user}) => {
   }
 
   useEffect(() => {
-      setUser(JSON.parse(window.localStorage.getItem('userInfo')))
-  },[window.localStorage.getItem('userInfo')])
+    const fetchProfile = async() => {
+      try {
+        const {email} = JSON.parse(localStorage.getItem('userInfo'))
+        const { data } = await axios.post('/api/users/profile', { email },config)
+        setUser(data)
+        console.log(data)
+        setProfileUpdated(false)
+      } catch (error) {
+        console.log("Error" + error.message)
+      }
+    }
+    fetchProfile()
+  },[profileUpdated])
 
   return (
     <Menu selectedKeys={[current]} mode="horizontal">
