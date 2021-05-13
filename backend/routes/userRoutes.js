@@ -1,7 +1,7 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import expressAsyncHandler from 'express-async-handler'
-import safe from '../middleware/authMiddleware.js'
+import {safe,admin} from '../middleware/authMiddleware.js'
 const router = express.Router()
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
@@ -135,6 +135,11 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
 
     }
   }
+}))
+
+router.route('/').get(admin,  expressAsyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
 }))
 
 export default router

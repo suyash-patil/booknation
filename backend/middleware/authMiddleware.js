@@ -20,4 +20,17 @@ const safe = asyncHandler(async (req,res,next) => {
     res.status(401).json('Not authorized')
   }
 })
-export default safe
+
+const admin = asyncHandler(async (req,res,next) => {
+  const {email} = req.body
+  const user = await User.findOne({email:email})
+  if(user && user.isAdmin) {
+    next()
+  }
+  else {
+    res.status(401)
+    throw new Error('Not authorized')
+  }
+})
+
+export {safe,admin}
