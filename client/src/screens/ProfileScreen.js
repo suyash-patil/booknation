@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React,{useState,useEffect} from 'react'
-import {Card,Row,Col,Form,Typography,Descriptions,Input, Button, message,Alert,TypographyProps} from 'antd'
-import { MailOutlined} from '@ant-design/icons'
+import {Card,Row,Col,Form,Typography,Descriptions,Input, Button, message,Alert,TypographyProps,Spin} from 'antd'
+import { MailOutlined,LoadingOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 const {Paragraph} = Typography
+const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 50, marginBottom: 20 }} spin />;
 
 const ProfileScreen = ({history}) => {
   const [name,setName] = useState('')
@@ -17,6 +18,7 @@ const ProfileScreen = ({history}) => {
   const [isUpdated,setIsUpdated] = useState(false)
   const [passUpdated,setPassUpdated] = useState(false)
   const [orders,setOrders] = useState([])
+  const [loading,setLoading] = useState(true)
   const passw = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,25}$/;
 
   useEffect(() => {
@@ -66,14 +68,12 @@ const ProfileScreen = ({history}) => {
       const {_id} = JSON.parse(localStorage.getItem('userInfo'))
       const {data} = await axios.get(`/api/order/getorders/${_id}`)
       console.log(data)
+      setLoading(false)
       setOrders(data)
     }
     fetchOrders()
   },[])
 
-  const copyhandler = () => {
-    message.success("Copied to Clipboard")
-  }
 
   useEffect(() => {
     if (!localStorage.getItem('userInfo')){
@@ -180,59 +180,64 @@ const ProfileScreen = ({history}) => {
         <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={20} lg={16}>
           <Card style={{ textAlign: "center" }}>
             <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Orders</h3>
+            {loading ? (<div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Spin indicator={antIcon} />
+            </div>) : (<>
             {orders.length === 0 && <p>You have no orders to display</p> }
             {orders.length && <div style={{overflowX:"auto"}}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>
-                      ID
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
                     </th>
-                    <th>
-                      DATE
+                        <th>
+                          DATE
                     </th>
-                    <th>
-                      TOTAL
+                        <th>
+                          TOTAL
                     </th>
-                    <th>
-                      PAYMENT
+                        <th>
+                          PAYMENT
                     </th>
-                    <th>
-                      DELIVERY
+                        <th>
+                          DELIVERY
                     </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr style={{alignItems:"center"}} key={order._id}>
-                      <td>
-                        <Paragraph copyable={{onCopy:function(){message.success("Copied to Clipboard")}}}>{order._id}</Paragraph>
-                      </td>
-                      <td style={{whiteSpace:"nowrap"}}>
-                        {order.createdAt.split("T")[0]}
-                      </td>
-                      <td>
-                        {order.totalPrice}
-                      </td>
-                      <td style={{ whiteSpace: "nowrap" }}>
-                        {order.isPaid ? <Alert style={{padding:"4px"}} message={order.paidAt.split("T")[0]} type="success" showIcon />  : <Alert style={{padding:"4px"}} message="Pending" type="warning" showIcon />}
-                      </td>
-                      <td style={{ whiteSpace: "nowrap" }}>
-                        {order.isDelivered ? <Alert style={{ padding: "4px" }} message={order.deliveredAt.split("T")[0]} type="success" showIcon /> : <Alert style={{padding:"4px"}} message="Pending" type="warning" showIcon />}
-                      </td>
-                      <td>
-                        <Link to={`placeorder/${order._id}`}>
-                          <Button>
-                            Details
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr style={{ alignItems: "center" }} key={order._id}>
+                          <td>
+                            <Paragraph copyable={{ onCopy: function () { message.success("Copied to Clipboard") } }}>{order._id}</Paragraph>
+                          </td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            {order.createdAt.split("T")[0]}
+                          </td>
+                          <td>
+                            {order.totalPrice}
+                          </td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            {order.isPaid ? <Alert style={{ padding: "4px" }} message={order.paidAt.split("T")[0]} type="success" showIcon /> : <Alert style={{ padding: "4px" }} message="Pending" type="warning" showIcon />}
+                          </td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            {order.isDelivered ? <Alert style={{ padding: "4px" }} message={order.deliveredAt.split("T")[0]} type="success" showIcon /> : <Alert style={{ padding: "4px" }} message="Pending" type="warning" showIcon />}
+                          </td>
+                          <td>
+                            <Link to={`placeorder/${order._id}`}>
+                              <Button>
+                                Details
                           </Button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+              )
             </div>}
+            </>)}
           </Card>
         </Col>
     </Row>
