@@ -49,7 +49,7 @@ const CompleteOrderScreen = ({history,match}) => {
     .then(async() => await axios.get('/api/fetch-pdf',{responseType:'blob'}))
     .then((res) => {
       const pdfBlob = new Blob([res.data],{type:'application/pdf'});
-      saveAs(pdfBlob,'newPdf.pdf')
+      saveAs(pdfBlob,'invoice.pdf')
     })
     localStorage.removeItem('cart')
     localStorage.removeItem('orderData')
