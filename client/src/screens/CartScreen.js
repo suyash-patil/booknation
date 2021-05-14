@@ -3,8 +3,6 @@ import {Link} from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import {addItem, removeItem} from '../helpers/cartHelper'
 import {DeleteOutlined} from '@ant-design/icons'
-import Paragraph from 'antd/lib/skeleton/Paragraph'
-const {Item} = List
 const {Title} = Typography
 
 const CartScreen = ({history,cartItems,setCartItems}) => {

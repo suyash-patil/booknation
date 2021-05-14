@@ -55,22 +55,31 @@ const OrderScreen = ({history}) => {
   },[history])
 
   const placeOrder = async () => {
-    const { data } = await axios.post(`/api/order`, {
-      orderItems,
-      shippingAddress,
-      paymentMethod,
-      itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2),
-      shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 15)),
-      taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2),
-      totalPrice: Number(Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))).toFixed(2),
-      _id
-    })
-    console.log('success',data)
-    localStorage.setItem('orderData',JSON.stringify(data))
-    message.success("Order placed successfully")
-    history.push(`/placeorder/${data._id}`)
-    localStorage.removeItem('shipAddress')
-    localStorage.removeItem('paymethod')
+    try {
+      const {email} = JSON.parse(localStorage.getItem('userInfo'))
+      const {data} = await axios.post('/api/users/profile',{email})
+      if(data) {
+        const { data } = await axios.post(`/api/order`, {
+          orderItems,
+          shippingAddress,
+          paymentMethod,
+          itemPrice: Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)).toFixed(2),
+          shippingPrice: Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 15)),
+          taxPrice: Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))).toFixed(2),
+          totalPrice: Number(Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))).toFixed(2),
+          _id
+        })
+        console.log('success', data)
+        localStorage.setItem('orderData', JSON.stringify(data))
+        message.success("Order placed successfully")
+        history.push(`/placeorder/${data._id}`)
+        localStorage.removeItem('shipAddress')
+        localStorage.removeItem('paymethod')
+      }
+    } catch (error) {
+      message.error("Order not placed successfully! Refresh the page")
+    }
+
   }
 
 

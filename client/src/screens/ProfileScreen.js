@@ -100,9 +100,9 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
 
   return (
       <div style={{ marginTop:"0px", backgroundColor: "#002766", maxHeight:"120px" }}>
-      <Row gutter={[12,12]} justify="space-around" >
+      <Row gutter={[12,12]} justify="center" >
 
-        <Col style={{marginTop:"60px"}} sm={24} xs={24} md={24} lg={8}>
+        <Col style={{marginTop:"60px"}} sm={24} xs={24} md={24} lg={12}>
          <Card style={{textAlign:"center"}}>
               {edit ? (
                 <>
@@ -185,8 +185,8 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
            )}
         </Card>
       </Col>
-        <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={20} lg={16}>
-          <Card style={{ textAlign: "center" }}>
+        <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={20} lg={20}>
+          <Card style={{ textAlign: "center", marginBottom:"50px" }}>
             <h3 style={{ margin: "20px auto", color: "#096dd9" }}>Orders</h3>
             {loading ? (<div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <Spin indicator={antIcon} />
@@ -243,7 +243,7 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
                       ))}
                     </tbody>
                   </table>
-              )
+
             </div>}
             </>)}
           </Card>

@@ -41,10 +41,14 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
         setUser(data)
         setProfileUpdated(false)
       } catch (error) {
+        message.error("Profile not found! This can happen if admin deleted your profile")
+        setUser(null)
+        history.push("/")
+        localStorage.removeItem('userInfo')
       }
     }
     fetchProfile()
-  },[profileUpdated])
+  },[profileUpdated,history])
 
   return (
     <Menu selectedKeys={[current]} mode="horizontal">
