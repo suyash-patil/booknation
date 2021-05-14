@@ -154,4 +154,41 @@ router.route('/:id').delete(expressAsyncHandler(async (req, res) => {
   }
 }))
 
+router.route('/getuser/:id').get(expressAsyncHandler(async(req,res) => {
+  const user = await User.findById(req.params.id)
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: generateToken(user._id),
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  })
+}))
+
+router.route('/edituser/:id').put(expressAsyncHandler(async(req,res) => {
+  const {name,isAdmin} = req.body
+  const user = await User.findById(req.params.id)
+  if(user) {
+    user.name = name || user.name
+    user.isAdmin = isAdmin
+
+    const updatedUser = await user.save()
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    })
+  }
+  else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+}))
+
 export default router

@@ -51,7 +51,7 @@ const UserlistScreen = ({history}) => {
       try {
         const { data } = await axios.delete(`/api/users/${id}`)
         message.success(data.message)
-        setIsDeleted(true)
+        setIsDeleted(!isDeleted)
 
       } catch (error) {
         message.error("User not found")
@@ -82,7 +82,7 @@ const UserlistScreen = ({history}) => {
                         EMAIL
           </th>
                       <th>
-                        ADMIN
+                        ADMIN STATUS
           </th>
                       <th>
 
