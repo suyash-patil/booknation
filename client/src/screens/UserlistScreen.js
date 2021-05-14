@@ -49,7 +49,7 @@ const UserlistScreen = ({history}) => {
 
   const deleteHandler = async (id) => {
       try {
-        const { data } = await axios.delete(`/api/users/${id}`)
+        const { data } = await axios.delete(`/api/users/delete/${id}`)
         message.success(data.message)
         setIsDeleted(!isDeleted)
 
@@ -74,16 +74,16 @@ const UserlistScreen = ({history}) => {
                     <thead>
                       <th>
                         ID
-          </th>
+                      </th>
                       <th>
                         NAME
-          </th>
+                      </th>
                       <th>
                         EMAIL
-          </th>
+                      </th>
                       <th>
                         ADMIN STATUS
-          </th>
+                      </th>
                       <th>
 
                       </th>
@@ -95,7 +95,7 @@ const UserlistScreen = ({history}) => {
                           <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.isAdmin ? <Tag color="green">ADMIN</Tag> : <Tag color="geekblue">USER</Tag>}</td>
-                          <td style={{ whiteSpace: "nowrap" }}><Link to={`/user/${user._id}/edit`}><Button><EditOutlined /></Button></Link>
+                          <td style={{ whiteSpace: "nowrap" }}><Link to={`/admin/user/${user._id}/edit`}><Button><EditOutlined /></Button></Link>
                             <Popconfirm placement="right" title="Are you sure you want to delete the user" okText="Yes" cancelText="Cancel" onConfirm={() => deleteHandler(user._id)}>
                               <Button style={{ marginLeft: "5px", background: "#ff2925", color: "white", border: "#ff2925" }}>
                                 <DeleteOutlined />

@@ -8,6 +8,7 @@ import EdituserScreen from './screens/EdituserScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import OrderScreen from './screens/OrderScreen'
+import ProductlistScreen from './screens/ProductlistScreen'
 import ProductScreen from './screens/ProductScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import RegisterScreen from './screens/RegisterScreen'
@@ -40,12 +41,13 @@ const App = () => {
         <Switch>
           <Route exact path="/register" render={(props) => (<RegisterScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/profile" render={(props) => (<ProfileScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
-          <Route exact path="/userlist" render={(props) => (<UserlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
+          <Route exact path="/admin/userlist" render={(props) => (<UserlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
+          <Route exact path="/admin/productlist" render={(props) => (<ProductlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
           <Route exact path="/login" render={(props) => (<LoginScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user}  />)}/>
           <Route exact path="/" render={(props) => (<HomeScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)}/>
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route path="/cart/:id?" render={(props) => (<CartScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
-          <Route path="/user/:id/edit" render={(props) => (<EdituserScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route path="/admin/user/:id/edit" render={(props) => (<EdituserScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/shipping" render={(props) => (<ShippingScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/placeorder" render={(props) => (<OrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/placeorder/:id" render={(props) => (<CompleteOrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />

@@ -142,7 +142,7 @@ router.route('/').post(admin, expressAsyncHandler(async (req, res) => {
   res.json(users)
 }))
 
-router.route('/:id').delete(expressAsyncHandler(async (req, res) => {
+router.route('/delete/:id').delete(expressAsyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
   if(user) {
     await user.remove()

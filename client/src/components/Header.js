@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Menu,message,Badge } from 'antd'
-import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, SettingOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {Link, useHistory} from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
 import axios from 'axios';
@@ -41,9 +41,6 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
         setUser(data)
         setProfileUpdated(false)
       } catch (error) {
-        message.error("Profile not found! This can happen if admin deleted your profile")
-        setUser(null)
-        history.push("/")
         localStorage.removeItem('userInfo')
       }
     }
@@ -78,11 +75,19 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
           Register
         </Link>
       </Item>}
-      {user && user.isAdmin && <Item key="userlist" className="float-right">
-        <Link to="/userlist">
-          Users
-        </Link>
-      </Item>}
+
+      {user && user.isAdmin && <SubMenu icon={<SettingOutlined />} className="float-right" title="Admin" >
+        <Menu.Item>
+          <Link to="/admin/userlist">
+            Users
+            </Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="/admin/productlist">
+            Products
+          </Link>
+          </Menu.Item>
+      </SubMenu>}
     </Menu>
   )
 }
