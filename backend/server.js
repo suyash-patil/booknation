@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import path from 'path'
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -8,10 +9,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import pdf from 'html-pdf'
 import template from './utils/document.js'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config()
 
 

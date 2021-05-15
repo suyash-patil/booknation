@@ -1,15 +1,27 @@
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button, message, Row, Spin, Col, Card, Popconfirm, Tag } from 'antd'
+import { Button, message, Row, Spin, Col, Card, Popconfirm, Tag,Modal,Form,Upload, Input } from 'antd'
+import firebase from 'firebase'
+import {storage} from '../firebase'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 50, marginBottom: 50 }} spin />;
-
+const {Dragger} = Upload
 const ProductlistScreen = ({ history }) => {
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [isDeleted, setIsDeleted] = useState(false)
+  const [productModal,setProductModal] = useState(false)
+  const [name,setName] = useState('')
+  const [author,setAuthor] = useState('')
+  const [description,setDesc] = useState('')
+  const [price,setPrice] = useState('')
+  const [countInStock,setStock] = useState(1)
+  const [image,setImage]= useState('')
+  const [progess,setProgress] = useState(0)
+
+
 
   const config = {
     headers: {
@@ -40,6 +52,71 @@ const ProductlistScreen = ({ history }) => {
     fetchProducts()
   }, [isDeleted])
 
+  const uploadFileHandler = async (e) => {
+
+    if(e.target.files[0]){
+      setImage(e.target.files[0])
+    }
+  }
+
+  const productHandler = async (info) => {
+    // const formData = new FormData()
+    // formData.append('image', image)
+    // try {
+    //   const config = {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   }
+    //   const { data } = await axios.post('/api/upload', formData, config)
+    //   setImage(data)
+
+    var fileTypes = ["image"]; //acceptable file types
+    let filetype = image.type.split("/")[0]; //is extension in acceptable types
+    console.log(info);
+
+    if (!fileTypes.includes(filetype)) {
+      return message.error("file type not supported");
+    }
+
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+
+      },
+      (error) => {
+        console.log(error);
+        message.error(error.message)
+      },
+      () => {
+        storage.ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then(async(url) => {
+            const config2 = {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+            const { _id } = JSON.parse
+              (localStorage.getItem('userInfo'))
+            const { data } = await axios.post('/api/products/create', { name, description, price, author, countInStock, image:url, _id }, config2)
+            console.log(data)
+            setProductModal(false)
+            message.success("Product added")
+      }
+    )
+
+  }
+)
+}
+
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(`/api/products/delete/${id}`)
@@ -58,7 +135,7 @@ const ProductlistScreen = ({ history }) => {
 
         <Col style={{ marginTop: "60px" }} sm={24} xs={24} md={24} lg={24}>
           <Card style={{ textAlign: "center" }}>
-            <h1>Products</h1>
+            <h1>Products <Button className="float-right" id="create-prod-btn" onClick={() => setProductModal(true)}>Create Product</Button></h1>
             {loading ? (<div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
               <Spin indicator={antIcon} />
             </div>) : (
@@ -106,6 +183,48 @@ const ProductlistScreen = ({ history }) => {
           </Card>
         </Col>
       </Row>
+      <Modal
+        footer={null}
+        centered
+        // title="Team"
+        width={600}
+        closable={false}
+        bodyStyle={{ borderRadius: "15px", padding: "10px" }}
+        visible={productModal}
+        destroyOnClose
+        okText="Save"
+        onOk={() => {
+          setProductModal(false);
+        }}
+        onCancel={() => setProductModal(false)}
+      >
+      <Form onFinish={productHandler}>
+        <Form.Item>
+          <Input name="image" type="file" onChange={uploadFileHandler}/>
+
+        </Form.Item>
+        <Form.Item>
+          <Input placeholder="Name" onChange={(e) => setName(e.target.value)}/>
+        </Form.Item>
+          <Form.Item>
+            <Input placeholder="author" onChange={(e)=> setAuthor(e.target.value)} />
+          </Form.Item>
+          <Form.Item>
+            <Input placeholder="Price" onChange={(e) => setPrice(e.target.value)}/>
+          </Form.Item>
+          <Form.Item>
+            <Input.TextArea placeholder="desc" onChange={(e) => setDesc(e.target.value)}/>
+          </Form.Item>
+          <Form.Item>
+            <Input placeholder="Stock" onChange={(e) => setStock(e.target.value)} />
+          </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      </Modal>
     </div>
   )
 }

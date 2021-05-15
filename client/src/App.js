@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import CartScreen from './screens/CartScreen'
 import CompleteOrderScreen from './screens/CompleteOrderScreen'
+import EditproductScreen from './screens/EditproductScreen'
 import EdituserScreen from './screens/EdituserScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route path="/cart/:id?" render={(props) => (<CartScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route path="/admin/user/:id/edit" render={(props) => (<EdituserScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
+          <Route path="/admin/product/:id/edit" render={(props) => (<EditproductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/shipping" render={(props) => (<ShippingScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/placeorder" render={(props) => (<OrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/placeorder/:id" render={(props) => (<CompleteOrderScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />

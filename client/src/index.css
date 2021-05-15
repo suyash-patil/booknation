@@ -173,3 +173,12 @@ main {
 #go-to-payment-btn:hover {
   border: 1px solid #4BB543;
 }
+#create-prod-btn {
+  background: #4BB543;
+  color: white;
+  border: 1px solid #4BB543;
+  margin: 0.4rem;
+}
+#create-prod-btn:hover {
+  border: 1px solid #4BB543;
+}

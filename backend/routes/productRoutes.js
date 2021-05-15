@@ -46,4 +46,43 @@ router.route('/delete/:id').delete(expressAsyncHandler(async(req,res) => {
   }
 }))
 
+router.route('/create').post(expressAsyncHandler(async (req, res) => {
+  const {name,price,image,author,countInStock,description,_id} = req.body
+  const product = new Product({
+    name: name,
+    price: price,
+    user: _id,
+    image: image,
+    author: author,
+    countInStock: countInStock,
+    numReviews: 0,
+    description: description
+  })
+  const createdProduct = await product.save()
+  res.status(201).json(createdProduct)
+
+}))
+
+router.route('/update/:id').put(expressAsyncHandler(async (req, res) => {
+  const {name,price,author,description,image,countInStock} = req.body
+
+  const product = await Product.findById(req.params.id)
+  if(product){
+    product.name = name
+    product.price = price
+    product.description = description
+    product.image = image
+    product.author = author
+    product.countInStock = countInStock
+
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  }
+  else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+
+}))
+
 export default router
