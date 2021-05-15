@@ -75,11 +75,13 @@ const ProductlistScreen = ({ history }) => {
     let filetype = image.type.split("/")[0]; //is extension in acceptable types
     console.log(info);
 
+    const date = Date.now()
+
     if (!fileTypes.includes(filetype)) {
       return message.error("file type not supported");
     }
 
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`images/${date}-${image.name}`).put(image);
 
     uploadTask.on(
       "state_changed",
@@ -96,7 +98,7 @@ const ProductlistScreen = ({ history }) => {
       },
       () => {
         storage.ref("images")
-          .child(image.name)
+          .child(`${date}-${image.name}`)
           .getDownloadURL()
           .then(async(url) => {
             const config2 = {
