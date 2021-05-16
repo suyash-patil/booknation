@@ -59,7 +59,7 @@ const EdituserScreen = ({ history, match }) => {
   const updateHandler = async () => {
     try {
       const { data } = await axios.put(`/api/products/update/${match.params.id}`, { name, price, author, description, image, countInStock })
-      message.success('Profile updated successfully')
+      message.success('Product updated successfully')
       setEdit(false)
       setIsUpdated(!isUpdated)
     } catch (error) {
