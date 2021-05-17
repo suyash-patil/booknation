@@ -11,4 +11,10 @@ This React website provides a complete solution for selling your book online. It
 - MongoDB
 - Node.js
 
+### Salient Features
+
+- Cart crud functionality
+- Generate PDF invoice after payment
+- Admin functions like create and update products
+
 
