@@ -14,6 +14,7 @@ const CompleteOrderScreen = ({history,match}) => {
   const [sdk,setSdk] = useState(false)
   const [user,setUser] = useState()
   const [loading, setLoading] = useState(true)
+  const [delivUpdate,setUpdate]=useState(false)
   const abortControl = new AbortController()
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const CompleteOrderScreen = ({history,match}) => {
     return () => {
       abortControl.abort()
     }
-  },[orderId])
+  },[orderId,delivUpdate])
   const payHandler = async (paymentResult) => {
     const { data } = await axios.put(`/api/order/${orderId}/pay`,paymentResult)
     history.push('/')
@@ -65,6 +66,12 @@ const CompleteOrderScreen = ({history,match}) => {
     message.success("Payment done successfully")
 
   }
+
+  const deliveryHandler = async () => {
+    const {data} = await axios.put(`/api/order/${orderId}/delivered`,{})
+    setUpdate(true)
+  }
+
   return (
     <div style={{ marginTop: "0px", backgroundColor: "#002766", maxHeight: "120px" }}>
       <Row justify="center">
@@ -185,6 +192,7 @@ const CompleteOrderScreen = ({history,match}) => {
                         </td>
                       <td style={{ padding: "5px" }}>
                         {order.isDelivered ? <Alert type="success" message={`${order.deliveredAt.split("T")[0]}`} showIcon /> : <Alert type="warning" message="NOT DELIVERED" showIcon />}
+                        {user.isAdmin && order.isPaid && !order.isDelivered && <Button onClick={deliveryHandler} style={{margin:"5px"}}>Mark as Delivered</Button>}
                       </td>
                     </tr>
                   </tbody>
