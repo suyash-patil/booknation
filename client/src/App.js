@@ -8,6 +8,7 @@ import EditproductScreen from './screens/EditproductScreen'
 import EdituserScreen from './screens/EdituserScreen'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
+import OrderlistScreen from './screens/OrderlistScreen'
 import OrderScreen from './screens/OrderScreen'
 import ProductlistScreen from './screens/ProductlistScreen'
 import ProductScreen from './screens/ProductScreen'
@@ -44,6 +45,7 @@ const App = () => {
           <Route exact path="/profile" render={(props) => (<ProfileScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
           <Route exact path="/admin/userlist" render={(props) => (<UserlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
           <Route exact path="/admin/productlist" render={(props) => (<ProductlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated} />)} />
+          <Route exact path="/admin/orderlist" render={(props) => (<OrderlistScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />
           <Route exact path="/login" render={(props) => (<LoginScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user}  />)}/>
           <Route exact path="/" render={(props) => (<HomeScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)}/>
           <Route path="/product/:id" render={(props) => (<ProductScreen {...props} setCartItems={setCartItems} cartItems={cartItems} setUser={setUser} user={user} />)} />

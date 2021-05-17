@@ -67,6 +67,20 @@ router.get('/getorders/:id',expressAsyncHandler(async(req,res) =>{
   if(orders) {
     res.json(orders)
   }
+  else {
+
+  }
+
+}))
+
+router.post('/getallorders', expressAsyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user','id name')
+  if(orders) {
+    res.json(orders)
+  }
+  else {
+
+  }
 
 }))
 

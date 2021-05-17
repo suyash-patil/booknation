@@ -87,6 +87,11 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
             Products
           </Link>
           </Menu.Item>
+        <Menu.Item>
+          <Link to="/admin/orderlist">
+            Orders
+          </Link>
+        </Menu.Item>
       </SubMenu>}
     </Menu>
   )
