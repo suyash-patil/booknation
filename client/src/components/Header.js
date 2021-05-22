@@ -29,9 +29,6 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
     setUser(null);
     message.success("Logged Out Successfully")
   }
-  const giveData = () => {
-    console.log('user', user)
-  }
 
   useEffect(() => {
     const fetchProfile = async() => {

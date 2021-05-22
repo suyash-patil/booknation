@@ -5,8 +5,6 @@ import Product from '../models/productModel.js'
 
 router.get('/', expressAsyncHandler(async (req, res) => {
   const products = await Product.find({})
-  // .then((products) => res.json(products))
-  // .catch((err) => console.log(err.message))
   if(products) {
     res.json(products)
   }
@@ -18,14 +16,6 @@ router.get('/', expressAsyncHandler(async (req, res) => {
 
 router.get('/:id', expressAsyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-  // .then((product) => {
-  //   if(product) {
-  //     res.json(product)
-  //   } else {
-  //     res.status(404).json({ message: "Product not found" })
-  //   }
-  // })
-  //   .catch(err => { res.status(404).json({ message: "Product not found" })})
   if(product) {
     res.json(product)
   }

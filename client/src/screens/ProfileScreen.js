@@ -86,7 +86,6 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
       try {
         const { _id } = JSON.parse(localStorage.getItem('userInfo'))
         const { data } = await axios.get(`/api/order/getorders/${_id}`)
-        console.log(data)
         setLoading(false)
         setOrders(data)
       } catch (error) {

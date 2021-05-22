@@ -16,28 +16,31 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
   const [loading,setLoading] = useState(true)
   const [rating,setRating] = useState()
   const [comment,setComment] = useState('')
-  const [_id,setId] = useState()
+  const [_id,setId] = useState('')
   const [reviewModal,setReviewModal] = useState(false)
   const [name,setName] = useState('')
-  // let btnRef = useRef()
-
   useEffect(() => {
     const fetchProduct = async () => {
       const {data} = await axios.get(`/api/products/${match.params.id}`)
       setProduct(data)
-      console.log(data)
       setLoading(false)
-      const {_id,name} = JSON.parse(localStorage.getItem('userInfo'))
-      setId(_id)
-      setName(name)
+      if(localStorage.getItem('userInfo')){
+        const { _id, name } = JSON.parse(localStorage.getItem('userInfo'))
+        setId(_id)
+        setName(name)
+      }
     }
     fetchProduct()
   },[match])
 
   const addReview = async() => {
+    if(localStorage.getItem('userInfo')){
+      message.info("You must be logged in to review product")
+      history.push('/login')
+      return
+    }
     const {_id,name} = JSON.parse(localStorage.getItem('userInfo'))
     const {data} = await axios.post(`/api/products/${match.params.id}/review`,{rating,comment,name,_id})
-    console.log(data)
     setReviewModal(false)
     message.success("Review submitted successfully")
   }
@@ -48,14 +51,9 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
         message.info("You must be logged in!")
         return
       }
-      // if (btnRef.current) {
-      //   btnRef.current.setAttribute("disabled", "disabled");
-      // }
       addItem(product,qty);
       setCartItems(JSON.parse(localStorage.getItem('cart')))
       message.success(`Book added to cart`)
-      // It prevents users to click Add to cart button multiple times
-      // setTimeout(function () { btnRef.current.removeAttribute("disabled") }, 3000);
   }
 
   return (
@@ -156,7 +154,6 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
       <Modal
         footer={null}
         centered
-        // title="Team"
         width={600}
         closable={false}
         bodyStyle={{ borderRadius: "15px", padding: "10px" }}

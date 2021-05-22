@@ -39,7 +39,6 @@ const UserlistScreen = ({history}) => {
         const { data } = await axios.post('/api/users', { email }, config)
         setUsers(data)
         setLoading(false)
-        console.log(users)
       } catch (error) {
 
       }

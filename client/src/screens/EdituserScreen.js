@@ -35,7 +35,6 @@ const EdituserScreen = ({history,match}) => {
     const fetchUser =async () => {
       const {data} = await axios.get(`/api/users/getuser/${match.params.id}`)
       setUserData(data)
-      console.log(data)
       setAdmin(data.isAdmin)
       setEmail(data.email)
       setName(data.name)

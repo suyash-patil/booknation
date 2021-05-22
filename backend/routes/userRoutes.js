@@ -8,34 +8,6 @@ import generateToken from '../utils/generateToken.js'
 router.post('/login', expressAsyncHandler(async (req,res) => {
   const {email, password} = req.body
   const user = await User.findOne({email: email})
-  //   .then(if (user && (await user.matchPass(password))) {
-  //     res.json({
-  //       _id: user._id,
-  //       name: user.name,
-  //       email: user.email,
-  //       isAdmin: user.isAdmin,
-  //       token: null
-  //     })
-  //   }
-  // else {
-  //   res.status(401)
-  //   throw new Error('Invalid user')
-  // })
-  // await User.findOne({email: email})
-  // .then(async (user) => {
-  //   await user.matchPass(password)
-  //   .then((pass) => {
-  //     pass ? res.json({
-  //       _id: user._id,
-  //       name: user.name,
-  //        email: user.email,
-  //        isAdmin: user.isAdmin,
-  //        token: generateToken(user._id)
-  //     }) : (res.status(401).json(`Invalid email or password`))
-  //   })
-  //   .catch((err) => console.log(error))
-  // })
-  //   .catch(() => res.status(401).json('Invalid email or password'))
   if(user && await user.matchPass(password)){
     res.json({
         _id: user._id,

@@ -58,20 +58,9 @@ const ProductlistScreen = ({ history }) => {
   }
 
   const productHandler = async (info) => {
-    // const formData = new FormData()
-    // formData.append('image', image)
-    // try {
-    //   const config = {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     }
-    //   }
-    //   const { data } = await axios.post('/api/upload', formData, config)
-    //   setImage(data)
 
-    var fileTypes = ["image"]; //acceptable file types
-    let filetype = image.type.split("/")[0]; //is extension in acceptable types
-    console.log(info);
+    var fileTypes = ["image"];
+    let filetype = image.type.split("/")[0];
 
     const date = Date.now()
 
@@ -91,7 +80,6 @@ const ProductlistScreen = ({ history }) => {
 
       },
       (error) => {
-        console.log(error);
         message.error(error.message)
       },
       () => {
@@ -107,7 +95,6 @@ const ProductlistScreen = ({ history }) => {
             const { _id } = JSON.parse
               (localStorage.getItem('userInfo'))
             const { data } = await axios.post('/api/products/create', { name, description, price, author, countInStock, image:url, _id }, config2)
-            console.log(data)
             setProductModal(false)
             message.success("Product added")
             setProgress(0)
@@ -187,7 +174,6 @@ const ProductlistScreen = ({ history }) => {
       <Modal
         footer={null}
         centered
-        // title="Team"
         width={600}
         closable={false}
         bodyStyle={{ borderRadius: "15px", padding: "10px" }}

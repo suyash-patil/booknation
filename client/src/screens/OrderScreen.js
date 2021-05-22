@@ -49,7 +49,6 @@ const OrderScreen = ({history}) => {
       setUsername(name)
       setEmail(email)
       const {_id} = JSON.parse(localStorage.getItem('userInfo'))
-      console.log(_id)
       setId(_id)
     }
   },[history])
@@ -69,7 +68,6 @@ const OrderScreen = ({history}) => {
           totalPrice: Number(Number(orderItems.reduce((acc, item) => acc + item.price * item.count, 0)) + Number(0.07 * (orderItems.reduce((acc, item) => acc + item.price * item.count, 0))) + Number((orderItems.reduce((acc, item) => acc + item.price * item.count, 0) > 100 ? 0 : 20))).toFixed(2),
           _id
         })
-        console.log('success', data)
         localStorage.setItem('orderData', JSON.stringify(data))
         message.success("Order placed successfully")
         history.push(`/placeorder/${data._id}`)
