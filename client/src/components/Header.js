@@ -51,7 +51,7 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
       </Item>
 
       {user ? (<SubMenu icon={<UserOutlined />} className="float-right" title={user.name} >
-          <Menu.Item onClick={giveData}>
+          <Menu.Item>
             <Link to="/profile">
               Profile
             </Link>
