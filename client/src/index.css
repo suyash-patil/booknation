@@ -182,3 +182,13 @@ main {
 #create-prod-btn:hover {
   border: 1px solid #4BB543;
 }
+
+#create-rev-btn {
+  background: #4BB543;
+  color: white;
+  border: 1px solid #4BB543;
+  margin: 0.4rem;
+}
+#create-rev-btn:hover {
+  border: 1px solid #4BB543;
+}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect,useRef} from 'react'
 import {Link} from 'react-router-dom'
-import {List,message, InputNumber, Tag, Form, Row, Col, Image, Card, Button,Spin, Select, Typography} from 'antd'
+import {List,message, InputNumber, Tag, Form, Row, Col, Image, Card, Button,Spin, Select, Typography, Modal, Input} from 'antd'
 import axios from 'axios'
 import Rating from '../components/Rating'
 import {DollarTwoTone, StarFilled} from '@ant-design/icons'
@@ -14,16 +14,33 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
   const [product, setProduct] = useState({})
   const [qty,setQty] = useState(1)
   const [loading,setLoading] = useState(true)
+  const [rating,setRating] = useState()
+  const [comment,setComment] = useState('')
+  const [_id,setId] = useState()
+  const [reviewModal,setReviewModal] = useState(false)
+  const [name,setName] = useState('')
   // let btnRef = useRef()
 
   useEffect(() => {
     const fetchProduct = async () => {
       const {data} = await axios.get(`/api/products/${match.params.id}`)
       setProduct(data)
+      console.log(data)
       setLoading(false)
+      const {_id,name} = JSON.parse(localStorage.getItem('userInfo'))
+      setId(_id)
+      setName(name)
     }
     fetchProduct()
   },[match])
+
+  const addReview = async() => {
+    const {_id,name} = JSON.parse(localStorage.getItem('userInfo'))
+    const {data} = await axios.post(`/api/products/${match.params.id}/review`,{rating,comment,name,_id})
+    console.log(data)
+    setReviewModal(false)
+    message.success("Review submitted successfully")
+  }
 
   const addToCartHandler = () => {
       if(!localStorage.getItem('userInfo')){
@@ -75,6 +92,33 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
             <Paragraph style={{color:"grey"}}>{product.description}</Paragraph>
           </Typography>
         </span>
+        <span>
+          <Typography>
+            <Title style={{ fontSize: "1.5rem", fontWeight: "400" }}>Reviews</Title>
+            {product.reviews && !product.reviews.find(r => r.user === _id) && (<Button onClick={() => setReviewModal(true)}>Add Review</Button>)}
+            <table className="table">
+            <tbody>
+                      {product.reviews.map((review) => (
+                        <>
+                          <tr style={{ textAlign: "left" }}>
+                            <td><h4>{review.name}</h4></td>
+                            <td>
+                              <Tag color="#388e3c">{review.rating} <StarFilled /></Tag>
+                            </td>
+
+
+                          </tr>
+                          <tr style={{textAlign:"left"}}>
+                            <Paragraph
+                              style={{ color: "grey" , fontSize:"15px"}}>   {review.comment}
+                            </Paragraph>
+                          </tr>
+                        </>
+                      ))}
+                      </tbody>
+            </table>
+            </Typography>
+        </span>
       </Col>
       <Col style={{ width: "250px" }}>
         <Card>
@@ -109,6 +153,38 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
         </Row>
         )}
       </span>
+      <Modal
+        footer={null}
+        centered
+        // title="Team"
+        width={600}
+        closable={false}
+        bodyStyle={{ borderRadius: "15px", padding: "10px" }}
+        visible={reviewModal}
+        destroyOnClose
+        okText="Save"
+        onOk={() => {
+          setReviewModal(false);
+        }}
+        onCancel={() => setReviewModal(false)}
+      >
+      <Form onFinish={addReview}>
+        <Form.Item>
+            <Select placeholder="Give Rating to Product" value={rating} onChange={(value) => setRating(value)}>
+              <Select.Option value={1}>1</Select.Option>
+              <Select.Option value={2}>2</Select.Option>
+              <Select.Option value={3}>3</Select.Option>
+              <Select.Option value={4}>4</Select.Option>
+              <Select.Option value={5}>5</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Input.TextArea placeholder="Leave your thoughts" onChange={(e) => setComment(e.target.value)} />
+        </Form.Item>
+        <Button style={{marginRight:"20px"}} onClick={() => setReviewModal(false)}>Cancel</Button>
+        <Button id="create-rev-btn" htmlType="submit">Submit</Button>
+      </Form>
+      </Modal>
     </span>
   )
 }

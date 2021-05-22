@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button, message, Row, Spin, Col, Card, Popconfirm, Tag,Modal,Form,Upload, Input } from 'antd'
+import { Button, message, Row, Spin, Col, Card, Popconfirm, Tag,Modal,Form,Upload, Input,Progress } from 'antd'
 import firebase from 'firebase'
 import {storage} from '../firebase'
 import axios from 'axios'
@@ -20,8 +20,6 @@ const ProductlistScreen = ({ history }) => {
   const [countInStock,setStock] = useState(1)
   const [image,setImage]= useState('')
   const [progess,setProgress] = useState(0)
-
-
 
   const config = {
     headers: {
@@ -86,7 +84,7 @@ const ProductlistScreen = ({ history }) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = Math.round(
+        let progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(progress);
@@ -112,6 +110,7 @@ const ProductlistScreen = ({ history }) => {
             console.log(data)
             setProductModal(false)
             message.success("Product added")
+            setProgress(0)
       }
     )
 
@@ -200,10 +199,11 @@ const ProductlistScreen = ({ history }) => {
         }}
         onCancel={() => setProductModal(false)}
       >
+        <progress style={{width:"100%"}} value={progess} max="100" />
       <Form onFinish={productHandler}>
+
         <Form.Item>
           <Input name="image" type="file" onChange={uploadFileHandler}/>
-
         </Form.Item>
         <Form.Item>
           <Input placeholder="Name" onChange={(e) => setName(e.target.value)}/>

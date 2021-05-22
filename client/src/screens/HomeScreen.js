@@ -29,7 +29,7 @@ const HomeScreen = () => {
       <Row align="middle" justify="center" gutter={[32,32]}>
         {products.map((product) => (
           <Col key={product._id}>
-            <Product product={product} />
+            <Product loading={loading} product={product} />
           </Col>
         ))}
       </Row>
