@@ -34,15 +34,19 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
   },[match])
 
   const addReview = async() => {
-    if(localStorage.getItem('userInfo')){
+    if(!localStorage.getItem('userInfo')){
       message.info("You must be logged in to review product")
       history.push('/login')
       return
     }
-    const {_id,name} = JSON.parse(localStorage.getItem('userInfo'))
-    const {data} = await axios.post(`/api/products/${match.params.id}/review`,{rating,comment,name,_id})
-    setReviewModal(false)
-    message.success("Review submitted successfully")
+    try {
+      const { _id, name } = JSON.parse(localStorage.getItem('userInfo'))
+      const { data } = await axios.post(`/api/products/${match.params.id}/review`, { rating, comment, name, _id })
+      setReviewModal(false)
+      message.success("Review submitted successfully")
+    } catch (error) {
+      message.error(error.message)
+    }
   }
 
   const addToCartHandler = () => {
