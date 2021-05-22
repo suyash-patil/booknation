@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React,{useState,useEffect} from 'react'
-import {Card,Row,Col,Form,Typography,Descriptions,Input, Button, message,Alert,TypographyProps,Spin} from 'antd'
-import { MailOutlined,LoadingOutlined} from '@ant-design/icons'
+import {Card,Row,Col,Typography,Input, Button, message,Alert,Spin} from 'antd'
+import {LoadingOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 const {Paragraph} = Typography
 const antIcon = <LoadingOutlined style={{ fontSize: 80, marginTop: 50, marginBottom: 20 }} spin />;

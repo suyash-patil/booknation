@@ -1,7 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
-import path from 'path'
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -45,5 +44,6 @@ app.post('/api/create-pdf',(req,res) => {
 app.get('/api/fetch-pdf',(req,res) => {
   res.sendFile('result.pdf',{root: '.'})
 })
+
 
 app.listen(process.env.PORT || 5000, console.log(`Server is running at port ${process.env.PORT}`))

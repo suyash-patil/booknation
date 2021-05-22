@@ -1,7 +1,6 @@
 import { Row,Card,Col,Form,Input,Button,message,Select } from 'antd'
 import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
-import {LockOutlined,MailOutlined, HomeOutlined,MobileOutlined,GlobalOutlined,EnvironmentOutlined,BorderlessTableOutlined} from '@ant-design/icons'
+import {HomeOutlined,MobileOutlined,GlobalOutlined,EnvironmentOutlined,BorderlessTableOutlined} from '@ant-design/icons'
 
 const ShippingScreen = ({history}) => {
   const [addressLine1,setAddressLine1] = useState('')
