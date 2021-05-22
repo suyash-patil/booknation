@@ -1,3 +1,5 @@
 /node_modules
 .env
 result.pdf
+/client/build
+/client/node_modules
