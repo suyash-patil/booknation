@@ -197,6 +197,7 @@ const CompleteOrderScreen = ({history,match}) => {
                     </tr>
                   </tbody>
                 </table>
+                <p>This is a test payment mode. Always use sandbox paypal credential for payments. Never ever use real paypal credential. We will not be responsible for any financial loses.</p>
                 {!order.isPaid && <PayPalButton amount={order.totalPrice} onError={() => message.error("Payment Unsuccessful")} onSuccess={payHandler} />}
               </>
             )}
