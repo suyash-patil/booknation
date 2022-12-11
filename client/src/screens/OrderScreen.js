@@ -56,9 +56,9 @@ const OrderScreen = ({history}) => {
   const placeOrder = async () => {
     try {
       const {email} = JSON.parse(localStorage.getItem('userInfo'))
-      const {data} = await axios.post('/api/users/profile',{email})
+      const {data} = await axios.post('http://localhost:5000/api/users/profile',{email})
       if(data) {
-        const { data } = await axios.post(`/api/order`, {
+        const { data } = await axios.post(`http://localhost:5000/api/order`, {
           orderItems,
           shippingAddress,
           paymentMethod,

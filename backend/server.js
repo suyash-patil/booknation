@@ -17,6 +17,9 @@ dotenv.config()
 connectDB()
 
 const app = express()
+
+app.use(cors())
+
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
@@ -30,7 +33,7 @@ app.use('/api/order',orderRoutes)
 
 app.get('/api/config/paypal',(req,res) => res.send(process.env.PAYPAL_CLIENT_ID))
 
-app.use(cors())
+
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 

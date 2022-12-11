@@ -34,7 +34,7 @@ const RegisterScreen = ({history,setUser,user}) => {
     }
     else {
       try {
-        const { data } = await axios.post(`/api/users/register`, { name, email, password }, config)
+        const { data } = await axios.post(`http://localhost:5000/api/users/register`, { name, email, password }, config)
         if (data) {
           localStorage.setItem('userInfo', JSON.stringify(data))
           setUser(JSON.parse(localStorage.getItem('userInfo')))

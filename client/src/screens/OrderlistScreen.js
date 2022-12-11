@@ -27,7 +27,7 @@ const OrderlistScreen = ({history}) => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const { data } = await axios.post('/api/order/getallorders')
+      const { data } = await axios.post('http://localhost:5000/api/order/getallorders')
       setOrders(data)
       setLoading(false)
     }

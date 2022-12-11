@@ -50,7 +50,7 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
         }
       }
       try{
-        const { data } = await axios.put(`/api/users/profile/update`, { email, name, oldpassword, newpass }, config)
+        const { data } = await axios.put(`http://localhost:5000/api/users/profile/update`, { email, name, oldpassword, newpass }, config)
         localStorage.setItem('userInfo', JSON.stringify(data))
         message.success("Profile Updated!")
         setNewPass("")
@@ -85,7 +85,7 @@ const ProfileScreen = ({history,profileUpdated,setProfileUpdated}) => {
     const fetchOrders = async () => {
       try {
         const { _id } = JSON.parse(localStorage.getItem('userInfo'))
-        const { data } = await axios.get(`/api/order/getorders/${_id}`)
+        const { data } = await axios.get(`http://localhost:5000/api/order/getorders/${_id}`)
         setLoading(false)
         setOrders(data)
       } catch (error) {
