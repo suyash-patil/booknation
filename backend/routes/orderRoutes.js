@@ -7,6 +7,7 @@ import Order from '../models/orderModel.js'
 router.post('/',expressAsyncHandler(async (req,res) => {
   const {orderItems, shippingAddress, paymentMethod, itemPrice, taxPrice, shippingPrice, totalPrice,_id} = req.body
   if(orderItems && orderItems.length === 0){
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(400)
     throw new Error('No items')
     return
@@ -23,6 +24,7 @@ router.post('/',expressAsyncHandler(async (req,res) => {
       totalPrice
     })
     const createdOrder = await order.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(201).json(createdOrder)
   }
 }))
@@ -31,9 +33,11 @@ router.get('/:id', expressAsyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate('user','name email')
 
   if(order) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(order)
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Not found')
   }
@@ -53,9 +57,11 @@ router.put('/:id/pay', expressAsyncHandler(async (req, res) => {
       email_address: req.body.payer.email_address
     }
     const updatedOrder = await order.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(updatedOrder)
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Not found')
   }
@@ -65,6 +71,7 @@ router.put('/:id/pay', expressAsyncHandler(async (req, res) => {
 router.get('/getorders/:id',expressAsyncHandler(async(req,res) =>{
   const orders = await Order.find({user:req.params.id})
   if(orders) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(orders)
   }
   else {
@@ -76,6 +83,7 @@ router.get('/getorders/:id',expressAsyncHandler(async(req,res) =>{
 router.post('/getallorders', expressAsyncHandler(async (req, res) => {
   const orders = await Order.find({}).populate('user','id name')
   if(orders) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(orders)
   }
   else {
@@ -91,9 +99,11 @@ router.put('/:id/delivered', expressAsyncHandler(async (req, res) => {
     order.isDelivered = true
     order.deliveredAt = Date.now()
     const updatedOrder = await order.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(updatedOrder)
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Not found')
   }

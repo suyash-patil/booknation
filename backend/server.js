@@ -31,7 +31,10 @@ app.use('/api/users',userRoutes)
 
 app.use('/api/order',orderRoutes)
 
-app.get('/api/config/paypal',(req,res) => res.send(process.env.PAYPAL_CLIENT_ID))
+app.get('/api/config/paypal',(req,res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.send(process.env.PAYPAL_CLIENT_ID)
+})
 
 
 app.use(bodyParser.urlencoded({extended:true}))
@@ -46,6 +49,7 @@ app.post('/api/create-pdf',(req,res) => {
   })
 })
 app.get('/api/fetch-pdf',(req,res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.sendFile('result.pdf',{root: '.'})
 })
 
@@ -53,10 +57,12 @@ const __dirname = path.resolve()
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')))
   app.get('*',(req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.sendFile(path.resolve(__dirname,'client','build','index.html'))
   })
 } else {
   app.get('/', (req,res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.send('API is running...')
   })
 }

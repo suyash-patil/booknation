@@ -9,6 +9,7 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
   const {email, password} = req.body
   const user = await User.findOne({email: email})
   if(user && await user.matchPass(password)){
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({
         _id: user._id,
         name: user.name,
@@ -20,6 +21,7 @@ router.post('/login', expressAsyncHandler(async (req,res) => {
       })
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Invalid email or password')
   }
@@ -29,6 +31,7 @@ router.route('/profile').post(expressAsyncHandler(async (req, res) => {
   const {email} = req.body
   const user = await User.findOne({email:email})
   if(user) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({
       _id: user._id,
       name: user.name,
@@ -58,6 +61,7 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
       user.password = newpass
     }
     const updatedUser = await user.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
@@ -70,6 +74,7 @@ router.route('/profile/update').put( expressAsyncHandler(async (req, res) => {
 
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('User not found')
   }
@@ -81,6 +86,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
   const userExist = await User.findOne({email:email})
 
   if(userExist) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(401)
     throw new Error('User already exist')
   }
@@ -91,6 +97,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
       password
     })
     if (user) {
+      res.header("Access-Control-Allow-Origin", "*");
       res.status(201).json({
         _id: user._id,
         name: user.name,
@@ -102,6 +109,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
       })
     }
     else {
+      res.header("Access-Control-Allow-Origin", "*");
       res.json(401)
       throw new Error('Invalid Email and Password')
 
@@ -111,6 +119,7 @@ router.route('/register').post( expressAsyncHandler(async (req, res) => {
 
 router.route('/').post(admin, expressAsyncHandler(async (req, res) => {
   const users = await User.find({})
+  res.header("Access-Control-Allow-Origin", "*");
   res.json(users)
 }))
 
@@ -118,9 +127,11 @@ router.route('/delete/:id').delete(expressAsyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
   if(user) {
     await user.remove()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({message: 'User removed'})
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('User not found')
   }
@@ -128,6 +139,7 @@ router.route('/delete/:id').delete(expressAsyncHandler(async (req, res) => {
 
 router.route('/getuser/:id').get(expressAsyncHandler(async(req,res) => {
   const user = await User.findById(req.params.id)
+  res.header("Access-Control-Allow-Origin", "*");
   res.json({
     _id: user._id,
     name: user.name,
@@ -147,6 +159,7 @@ router.route('/edituser/:id').put(expressAsyncHandler(async(req,res) => {
     user.isAdmin = isAdmin
 
     const updatedUser = await user.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
@@ -158,6 +171,7 @@ router.route('/edituser/:id').put(expressAsyncHandler(async(req,res) => {
     })
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('User not found')
   }

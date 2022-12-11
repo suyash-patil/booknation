@@ -6,6 +6,7 @@ import Product from '../models/productModel.js'
 router.get('/', expressAsyncHandler(async (req, res) => {
   const products = await Product.find({})
   if(products) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(products)
   }
   else {
@@ -17,6 +18,7 @@ router.get('/', expressAsyncHandler(async (req, res) => {
 router.get('/:id', expressAsyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
   if(product) {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(product)
   }
   else {
@@ -38,9 +40,11 @@ router.route('/:id/review').post(expressAsyncHandler(async(req,res) => {
     product.numReviews = product.reviews.length
     product.rating = Number(product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length).toFixed(1)
     await product.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(201).json(product)
 
   } else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Product not found')
   }
@@ -50,9 +54,11 @@ router.route('/delete/:id').delete(expressAsyncHandler(async(req,res) => {
   const product = await Product.findById(req.params.id)
   if(product){
     await product.remove()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({message:'Product removed'})
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Product not found')
   }
@@ -71,6 +77,7 @@ router.route('/create').post(expressAsyncHandler(async (req, res) => {
     description: description
   })
   const createdProduct = await product.save()
+  res.header("Access-Control-Allow-Origin", "*");
   res.status(201).json(createdProduct)
 
 }))
@@ -88,9 +95,11 @@ router.route('/update/:id').put(expressAsyncHandler(async (req, res) => {
     product.countInStock = countInStock
 
     const updatedProduct = await product.save()
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(updatedProduct)
   }
   else {
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(404)
     throw new Error('Product not found')
   }
