@@ -33,7 +33,7 @@ const EdituserScreen = ({history,match}) => {
 
   useEffect(() => {
     const fetchUser =async () => {
-      const {data} = await axios.get(`/api/users/getuser/${match.params.id}`)
+      const {data} = await axios.get(`https://covercove.onrender.com/api/users/getuser/${match.params.id}`)
       setUserData(data)
       setAdmin(data.isAdmin)
       setEmail(data.email)
@@ -47,7 +47,7 @@ const EdituserScreen = ({history,match}) => {
 
   const updateHandler = async () => {
     try {
-      const { data } = await axios.put(`/api/users/edituser/${match.params.id}`, { name, isAdmin })
+      const { data } = await axios.put(`https://covercove.onrender.com/api/users/edituser/${match.params.id}`, { name, isAdmin })
       message.success('Profile updated successfully')
       setAdmin(data.isAdmin)
       setName(data.name)

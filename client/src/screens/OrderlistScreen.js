@@ -27,7 +27,7 @@ const OrderlistScreen = ({history}) => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const { data } = await axios.post('http://localhost:5000/api/order/getallorders')
+      const { data } = await axios.post('https://covercove.onrender.com/api/order/getallorders')
       setOrders(data)
       setLoading(false)
     }

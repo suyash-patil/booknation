@@ -24,7 +24,7 @@ const CompleteOrderScreen = ({history,match}) => {
     }
         setUser(JSON.parse(localStorage.getItem('userInfo')))
         const addPayPalScript = async () => {
-        const {data:clientId} = await axios.get('http://localhost:5000/api/config/paypal')
+        const {data:clientId} = await axios.get('https://covercove.onrender.com/api/config/paypal')
         const script = document.createElement('script')
         script.type = 'text/javascript'
         script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
@@ -35,7 +35,7 @@ const CompleteOrderScreen = ({history,match}) => {
         document.body.appendChild(script)
       }
       const getOrder = async () => {
-        const {data} = await axios.get(`http://localhost:5000/api/order/${orderId}`)
+        const {data} = await axios.get(`https://covercove.onrender.com/api/order/${orderId}`)
         setOrder(data)
         setLoading(false)
       }
@@ -51,7 +51,7 @@ const CompleteOrderScreen = ({history,match}) => {
     }
   },[orderId,delivUpdate])
   const payHandler = async (paymentResult) => {
-    const { data } = await axios.put(`http://localhost:5000/api/order/${orderId}/pay`,paymentResult)
+    const { data } = await axios.put(`https://covercove.onrender.com/api/order/${orderId}/pay`,paymentResult)
     history.push('/')
     // await axios.post('http://localhost:5000/api/create-pdf',{user,orderData: JSON.parse(localStorage.getItem('orderData')),cartItems:JSON.parse(localStorage.getItem('cart')),paymentResult})
     // .then(async() => await axios.get('http://localhost:5000/api/fetch-pdf',{responseType:'blob'}))
@@ -69,7 +69,7 @@ const CompleteOrderScreen = ({history,match}) => {
   }
 
   const deliveryHandler = async () => {
-    const {data} = await axios.put(`http://localhost:5000/api/order/${orderId}/delivered`,{})
+    const {data} = await axios.put(`https://covercove.onrender.com/api/order/${orderId}/delivered`,{})
     setUpdate(true)
   }
 

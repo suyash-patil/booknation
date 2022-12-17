@@ -34,7 +34,7 @@ const Header = ({setUser,user,setProfileUpdated,profileUpdated}) => {
     const fetchProfile = async() => {
       try {
         const {email} = JSON.parse(localStorage.getItem('userInfo'))
-        const { data } = await axios.post('http://localhost:5000/api/users/profile', { email },config)
+        const { data } = await axios.post('https://covercove.onrender.com/api/users/profile', { email },config)
         setUser(data)
         setProfileUpdated(false)
       } catch (error) {

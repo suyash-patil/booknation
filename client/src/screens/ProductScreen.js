@@ -21,7 +21,7 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
   const [name,setName] = useState('')
   useEffect(() => {
     const fetchProduct = async () => {
-      const {data} = await axios.get(`https://covercove-oa4q.vercel.app/api/products/${match.params.id}`)
+      const {data} = await axios.get(`https://covercove.onrender.com/api/products/${match.params.id}`)
       setProduct(data)
       setLoading(false)
       if(localStorage.getItem('userInfo')){
@@ -41,7 +41,7 @@ const ProductScreen = ({history, match,setCartItems,cartItems}) => {
     }
     try {
       const { _id, name } = JSON.parse(localStorage.getItem('userInfo'))
-      const { data } = await axios.post(`https://covercove-oa4q.vercel.app/api/products/${match.params.id}/review`, { rating, comment, name, _id })
+      const { data } = await axios.post(`https://covercove.onrender.com/api/products/${match.params.id}/review`, { rating, comment, name, _id })
       setReviewModal(false)
       message.success("Review submitted successfully")
     } catch (error) {

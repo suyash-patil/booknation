@@ -43,7 +43,7 @@ const ProductlistScreen = ({ history }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('http://localhost:5000/api/products')
+      const { data } = await axios.get('https://covercove.onrender.com/api/products')
       setProducts(data)
       setLoading(false)
     }
@@ -94,7 +94,7 @@ const ProductlistScreen = ({ history }) => {
             }
             const { _id } = JSON.parse
               (localStorage.getItem('userInfo'))
-            const { data } = await axios.post('http://localhost:5000/api/products/create', { name, description, price, author, countInStock, image:url, _id }, config2)
+            const { data } = await axios.post('https://covercove.onrender.com/api/products/create', { name, description, price, author, countInStock, image:url, _id }, config2)
             setProductModal(false)
             message.success("Product added")
             setProgress(0)
@@ -107,7 +107,7 @@ const ProductlistScreen = ({ history }) => {
 
   const deleteHandler = async (id) => {
     try {
-      const { data } = await axios.delete(`http://localhost:5000/api/products/delete/${id}`)
+      const { data } = await axios.delete(`https://covercove.onrender.com/api/products/delete/${id}`)
       message.success(data.message)
       setIsDeleted(!isDeleted)
 

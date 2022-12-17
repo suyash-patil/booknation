@@ -36,7 +36,7 @@ const UserlistScreen = ({history}) => {
     const fetchUsers = async() => {
       try {
         const { email } = JSON.parse(localStorage.getItem('userInfo'))
-        const { data } = await axios.post('http://localhost:5000/api/users', { email }, config)
+        const { data } = await axios.post('https://covercove.onrender.com/api/users', { email }, config)
         setUsers(data)
         setLoading(false)
       } catch (error) {
@@ -48,7 +48,7 @@ const UserlistScreen = ({history}) => {
 
   const deleteHandler = async (id) => {
       try {
-        const { data } = await axios.delete(`http://localhost:5000/api/users/delete/${id}`)
+        const { data } = await axios.delete(`https://covercove.onrender.com/api/users/delete/${id}`)
         message.success(data.message)
         setIsDeleted(!isDeleted)
 
