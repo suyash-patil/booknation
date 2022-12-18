@@ -1,4 +1,4 @@
-# [covercove](https://covercove.herokuapp.com/) - An online book selling solution
+# [covercove](https://covercove.vercel.app/) - An online book selling solution
 
 ### Description
 
@@ -38,8 +38,15 @@ You can edit your profile and check your order status in the profile page.
 
 You can select the quantity of books and add it to cart. 
 
-![image](https://user-images.githubusercontent.com/66873825/208285189-42a5d355-70a4-48ce-9075-6ca579c2a244.png)
+![image](https://user-images.githubusercontent.com/66873825/208285625-d893d145-7dc1-4bf0-8cfa-7c41f3f2a91d.png)
 
+Once you click on place order, you will be redirected to enter the shipping address. 
 
+![image](https://user-images.githubusercontent.com/66873825/208285646-ae25259e-c223-476e-9dac-5a744c74b56b.png)
 
-Only an admin can make a user admin. 
+After confirming the order, you can see this page where you can select PayPal or debit/credit card.
+
+![image](https://user-images.githubusercontent.com/66873825/208285697-5219a2eb-d75b-4f91-81ca-8bde2b0dcd06.png)
+
+Once you enter the sandbox account details, you will be redirected to home screen and a popup will appear saying that your payment is successful. Admin can add/remove users as well as books and change the quantities of books. Only an admin can make another user admin. 
+
