@@ -49,8 +49,8 @@ const CartScreen = ({history,cartItems,setCartItems}) => {
           <List >
             {cartItems && cartItems.map(item => (
               <List.Item id="cart-list-item">
-                <Row id="cart-items-row" >
-                      <Image style={{ objectFit: "contain", maxWidth: "150px" }} height="150px" src={item.image} />
+                <Row id="cart-items-row" gutter={32}>
+                    <Image style={{ objectFit: "contain", maxWidth: "150px" }} height="150px" src={item.image} />
                     <Col style={{textAlign:"justify"}}>
                       <Row id="cart-items-row-book-name" >
                         <Link style={{fontSize:"1.1rem",color:"black"}} to={`/product/${item._id}`}>{item.name}</Link>
