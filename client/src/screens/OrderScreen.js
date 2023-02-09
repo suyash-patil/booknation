@@ -56,9 +56,9 @@ const OrderScreen = ({history}) => {
   const placeOrder = async () => {
     try {
       const {email} = JSON.parse(localStorage.getItem('userInfo'))
-      const {data} = await axios.post('https://covercove.onrender.com/api/users/profile',{email})
+      const {data} = await axios.post('https://booknation.onrender.com/api/users/profile',{email})
       if(data) {
-        const { data } = await axios.post(`https://covercove.onrender.com/api/order`, {
+        const { data } = await axios.post(`https://booknation.onrender.com/api/order`, {
           orderItems,
           shippingAddress,
           paymentMethod,

@@ -11,7 +11,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
       const fetchProducts = async () => {
-        const { data } = await axios.get(`https://covercove.onrender.com/api/products`)
+        const { data } = await axios.get(`https://booknation.onrender.com/api/products`)
         setProducts(data)
         setLoading(false)
       }

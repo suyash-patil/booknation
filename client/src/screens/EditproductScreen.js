@@ -36,7 +36,7 @@ const EdituserScreen = ({ history, match }) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const { data } = await axios.get(`https://covercove.onrender.com/api/products/${match.params.id}`)
+      const { data } = await axios.get(`https://booknation.onrender.com/api/products/${match.params.id}`)
       setProduct(data)
       setLoading(false)
       setName(data.name)
@@ -58,7 +58,7 @@ const EdituserScreen = ({ history, match }) => {
 
   const updateHandler = async () => {
     try {
-      const { data } = await axios.put(`https://covercove.onrender.com/api/products/update/${match.params.id}`, { name, price, author, description, image, countInStock })
+      const { data } = await axios.put(`https://booknation.onrender.com/api/products/update/${match.params.id}`, { name, price, author, description, image, countInStock })
       message.success('Product updated successfully')
       setEdit(false)
       setIsUpdated(!isUpdated)

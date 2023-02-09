@@ -24,7 +24,7 @@ const LoginScreen = ({history,setUser,user}) => {
 
   const loginHandler = async (e) => {
     try {
-      const { data } = await axios.post(`https://covercove.onrender.com/api/users/login`, { email, password }, config);
+      const { data } = await axios.post(`https://booknation.onrender.com/api/users/login`, { email, password }, config);
 
       if (data) {
         localStorage.setItem('userInfo', JSON.stringify(data))
