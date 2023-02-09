@@ -1,4 +1,4 @@
-# [covercove](https://covercove.herokuapp.com/) - An online book selling solution
+# [booknation](https://booknation.vercel.app/) - An online book selling solution
 
 ### Description
 

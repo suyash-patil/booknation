@@ -1,5 +1,5 @@
 {
-  "name": "covercove",
+  "name": "booknation",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suyash-patil/covercove.git"
+    "url": "git+https://github.com/suyash-patil/booknation.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/suyash-patil/covercove/issues"
+    "url": "https://github.com/suyash-patil/booknation/issues"
   },
-  "homepage": "https://github.com/suyash-patil/covercove#readme",
+  "homepage": "https://github.com/suyash-patil/booknation#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
